@@ -1,0 +1,11 @@
+global using System.Collections.Generic;
+global using System.Linq;
+global using System.Text;
+global using System;
+global using System.Collections;
+global using System.Runtime.CompilerServices;
+global using SunamoValues;
+global using SunamoValues.Constants;
+global using SunamoTextOutputGeneratorShared;
+global using SunamoTextOutputGenerator._sunamo;
+global using SunamoTextBuilderShared;
