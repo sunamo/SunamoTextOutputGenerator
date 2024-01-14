@@ -1,3 +1,5 @@
+using SunamoTextBuilder;
+
 namespace SunamoTextOutputGenerator;
 
 /// <summary>
@@ -6,7 +8,10 @@ namespace SunamoTextOutputGenerator;
 public class TextOutputGenerator : ITextOutputGenerator
 {
     private readonly static string s_znakNadpisu = AllStringsSE.asterisk;
-    public ITextBuilder sb = TextBuilder.Create();
+    // při převádění na nugety jsem to změnil na ITextBuilder sb = TextBuilder.Create();
+    // ale asi to byla blbost, teď mám v _sunamo Create() která je ale null místo abych použil ctor
+    // takže vracím nazpět.
+    public TextBuilder sb = new TextBuilder();
     public string prependEveryNoWhite
     {
         get => sb.prependEveryNoWhite;
