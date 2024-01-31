@@ -1,7 +1,7 @@
 namespace SunamoTextOutputGenerator._sunamo;
 
-internal class SH
-{
-    internal static Func<string, Object[], string> Format2;
+//public class SH
+//{
+//    public static Func<string, Object[], string> Format2;
 
-}
+//}

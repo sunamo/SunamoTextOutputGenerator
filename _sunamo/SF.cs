@@ -1,7 +1,7 @@
-namespace SunamoTextOutputGenerator._sunamo;
+//namespace SunamoTextOutputGenerator._sunamo;
 
-internal class SF
-{
-    internal static Func<string, string, string> PrepareToSerialization;
-    internal static Func<IList, string, string> PrepareToSerializationExplicitString;
-}
+//public class SF
+//{
+//    public static Func<string, string, string> PrepareToSerialization;
+//    public static Func<IList, string, string> PrepareToSerializationExplicitString;
+//}

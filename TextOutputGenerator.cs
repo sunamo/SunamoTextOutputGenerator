@@ -1,5 +1,3 @@
-using SunamoTextBuilder;
-
 namespace SunamoTextOutputGenerator;
 
 /// <summary>
@@ -93,12 +91,12 @@ public class TextOutputGenerator : ITextOutputGenerator
     {
         sb.AppendLine();
 
-        AppendLine(SH.Format2(text, p));
+        AppendLine(string.Format(text, p));
     }
 
     public void AppendFormat(string text, params string[] p)
     {
-        AppendLine(SH.Format2(text, p));
+        AppendLine(string.Format(text, p));
     }
     #endregion
 
@@ -125,7 +123,12 @@ public class TextOutputGenerator : ITextOutputGenerator
     #region List
     public void ListObject(IList files1)
     {
-        List(CA.ToListString(files1));
+        List<string> l = new List<string>();
+        foreach (var item in files1)
+        {
+            l.Add(item.ToString());
+        }
+        List(l);
     }
 
     public void ListSB(StringBuilder onlyStart, string v)
@@ -296,7 +299,7 @@ public class TextOutputGenerator : ITextOutputGenerator
     {
         foreach (var item in v)
         {
-            sb.AppendLine(SF.PrepareToSerialization(item.Key, item.Value));
+            sb.AppendLine(string.Join("|", item.Key, item.Value));
         }
     }
 
@@ -317,14 +320,14 @@ public class TextOutputGenerator : ITextOutputGenerator
                 Header(item.Key.ToString());
 
                 // vrací mi to na jednom řádku jak key tak všechny value oddělené |.
-                sb.AppendLine(SF.PrepareToSerializationExplicitString(new List<string>(new string[] { item.Value.ToString() }), deli));
+                sb.AppendLine(string.Join(deli, new string[] { item.Value.ToString() }));
 
                 sb.AppendLine();
             }
             else
             {
                 // vrací mi to na jednom řádku jak key tak všechny value oddělené |.
-                sb.AppendLine(SF.PrepareToSerializationExplicitString(new List<string>(new string[] { item.Key.ToString(), item.Value.ToString() }), deli));
+                sb.AppendLine(string.Join(deli, new string[] { item.Key.ToString(), item.Value.ToString() }));// SF.PrepareToSerializationExplicitString(new List<string>(), deli));
             }
 
         }
