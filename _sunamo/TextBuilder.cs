@@ -1,6 +1,8 @@
+namespace SunamoTextOutputGenerator._sunamo;
+
 //namespace SunamoTextOutputGenerator._sunamo;
 
-//public class TextBuilder
+//internal class TextBuilder
 //{
-//    public static Func<ITextBuilder> Create;
+//    internal static Func<ITextBuilder> Create;
 //}

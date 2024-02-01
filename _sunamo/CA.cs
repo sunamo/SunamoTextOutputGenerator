@@ -1,11 +1,13 @@
+namespace SunamoTextOutputGenerator._sunamo;
+
 //namespace SunamoTextOutputGenerator._sunamo;
 
-//public class CA
+//internal class CA
 //{
-//    public static Func<IList, List<string>> ToListString;
+//    internal static Func<IList, List<string>> ToListString;
 
 
-//    //public static IList ToListObject(params Object[] o)
+//    //internal static IList ToListObject(params Object[] o)
 //    //{
 //    //    return o.ToList();
 //    //}

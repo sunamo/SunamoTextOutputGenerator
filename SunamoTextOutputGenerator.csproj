@@ -3,14 +3,12 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Version>24.1.24.1</Version>
+    <Version>24.2.1.2</Version>
     <Description>Generating string output in various formats</Description>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="SunamoStringGetString" Version="24.1.22.1" />
-    <PackageReference Include="SunamoTextBuilder" Version="24.1.14.1" />
-    <PackageReference Include="SunamoTextOutputGeneratorShared" Version="24.1.14.1" />
-    <PackageReference Include="SunamoValues" Version="24.1.23.1" />
+    <PackageReference Include="SunamoExceptions" Version="24.2.1.1" />
+    <PackageReference Include="SunamoValues" Version="24.2.1.1" />
   </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>$(DefineConstants);ASYNC</DefineConstants>

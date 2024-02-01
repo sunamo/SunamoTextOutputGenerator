@@ -3,7 +3,7 @@ namespace SunamoTextOutputGenerator;
 /// <summary>
 /// In Comparing
 /// </summary>
-public class TextOutputGenerator : ITextOutputGenerator
+public class TextOutputGenerator //: ITextOutputGenerator
 {
     private readonly static string s_znakNadpisu = AllStringsSE.asterisk;
     // při převádění na nugety jsem to změnil na ITextBuilder sb = TextBuilder.Create();
@@ -199,7 +199,7 @@ public class TextOutputGenerator : ITextOutputGenerator
     {
         if (a.insertCount)
         {
-            //ThrowEx.Custom("later");
+            //throw new Exception("later");
             //header = (Header)((IList<char>)CA.JoinIList<char>(header, " (" + files1.Count() + AllStrings.rb));
         }
         if (a.headerWrappedEmptyLines)
