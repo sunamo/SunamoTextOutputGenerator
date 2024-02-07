@@ -1,13 +1,14 @@
 
 namespace SunamoTextOutputGenerator;
 using SunamoExceptions.OnlyInSE;
+using SunamoInterfaces.Interfaces;
 
 
 
 /// <summary>
 /// In Comparing
 /// </summary>
-public class TextBuilder //: ITextBuilder
+public class TextBuilder : ITextBuilder
 {
     private static Type type = typeof(TextBuilder);
 
@@ -19,7 +20,7 @@ public class TextBuilder //: ITextBuilder
     /// <summary>
     /// For PowershellRunner
     /// </summary>
-    public List<string> list = null;
+    public List<string> list { get; set; }
     private bool _useList = false;
 
     public void Clear()
@@ -32,6 +33,11 @@ public class TextBuilder //: ITextBuilder
         {
             sb.Clear();
         }
+    }
+
+    public static ITextBuilder Create(bool useList = false)
+    {
+        return new TextBuilder(useList);
     }
 
     /// <summary>
