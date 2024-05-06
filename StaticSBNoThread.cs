@@ -1,4 +1,4 @@
-namespace SunamoShared.Helpers.Text;
+namespace SunamoTextOutputGenerator;
 public class StaticSBNoThread
 {
     public static StringBuilder sb = new StringBuilder();

@@ -1,7 +1,6 @@
 using SunamoInterfaces.Interfaces;
-using SunamoTextOutputGenerator;
 
-namespace SunamoShared.Generators;
+namespace SunamoTextOutputGenerator;
 
 
 
@@ -12,7 +11,7 @@ public class NpmBashBuilder : INpmBashBuilder
     public NpmBashBuilder()
     {
         sb = new TextBuilder();
-        sb.prependEveryNoWhite = AllStringsSE.space;
+        sb.prependEveryNoWhite = AllStrings.space;
     }
 
     public NpmBashBuilder(TextBuilder sb)

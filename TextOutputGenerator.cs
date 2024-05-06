@@ -5,7 +5,7 @@ namespace SunamoTextOutputGenerator;
 /// </summary>
 public class TextOutputGenerator //: ITextOutputGenerator
 {
-    private readonly static string s_znakNadpisu = AllStringsSE.asterisk;
+    private readonly static string s_znakNadpisu = AllStrings.asterisk;
     // při převádění na nugety jsem to změnil na ITextBuilder sb = TextBuilder.Create();
     // ale asi to byla blbost, teď mám v _sunamo Create() která je ale null místo abych použil ctor
     // takže vracím nazpět.
@@ -59,7 +59,7 @@ public class TextOutputGenerator //: ITextOutputGenerator
     {
         foreach (var item in eq)
         {
-            AppendLine(item.Key + AllStringsSE.cs + item.Value + "x");
+            AppendLine(item.Key + AllStrings.cs + item.Value + "x");
         }
     }
     #endregion
@@ -113,6 +113,8 @@ public class TextOutputGenerator //: ITextOutputGenerator
         sb.AppendLine(string.Empty.PadLeft(v, paddingChar));
     }
     #endregion
+
+
 
     public override string ToString()
     {
@@ -206,7 +208,7 @@ public class TextOutputGenerator //: ITextOutputGenerator
         {
             sb.AppendLine();
         }
-        sb.AppendLine(header + AllStringsSE.colon);
+        sb.AppendLine(header + AllStrings.colon);
         if (a.headerWrappedEmptyLines)
         {
             sb.AppendLine();
@@ -231,7 +233,7 @@ public class TextOutputGenerator //: ITextOutputGenerator
     {
         if (text != string.Empty)
         {
-            sb.AppendLine(header + AllStringsSE.colon);
+            sb.AppendLine(header + AllStrings.colon);
             sb.AppendLine(text);
             sb.AppendLine();
         }
@@ -258,9 +260,25 @@ public class TextOutputGenerator //: ITextOutputGenerator
 
         foreach (var item in ordered)
         {
-            sb.AppendLine(item.Key + AllStringsSE.space + item.Value);
+            sb.AppendLine(item.Key + AllStrings.space + item.Value);
         }
 
+    }
+
+    public void IGrouping(IEnumerable<IGrouping<string, string>> g)
+    {
+        var d = IGroupingToDictionary(g);
+        Dictionary(d);
+    }
+
+    Dictionary<string, List<string>> IGroupingToDictionary(IEnumerable<IGrouping<string, string>> g)
+    {
+        Dictionary<string, List<string>> l = new Dictionary<string, List<string>>();
+        foreach (var item in g)
+        {
+            l.Add(item.Key, item.ToList());
+        }
+        return l;
     }
 
     public void Dictionary(Dictionary<string, List<string>> ls)
@@ -278,7 +296,7 @@ public class TextOutputGenerator //: ITextOutputGenerator
             List<string> d = new List<string>(ls.Count);
             foreach (var item in ls)
             {
-                d.Add(item.Key + AllStringsSE.space + item.Value.Count());
+                d.Add(item.Key + AllStrings.space + item.Value.Count());
             }
             List(d);
         }
@@ -310,12 +328,12 @@ public class TextOutputGenerator //: ITextOutputGenerator
     /// <typeparam name="T2"></typeparam>
     /// <param name="d"></param>
     /// <param name="deli"></param>
-    public void Dictionary<T1, T2>(Dictionary<T1, T2> d, string deli = AllStringsSE.verbar)
+    public void Dictionary<T1, T2>(Dictionary<T1, T2> d, string deli = AllStrings.verbar)
     {
         //StringBuilder sb = new StringBuilder();
         foreach (var item in d)
         {
-            if (deli != AllStringsSE.verbar)
+            if (deli != AllStrings.verbar)
             {
                 Header(item.Key.ToString());
 
@@ -338,7 +356,7 @@ public class TextOutputGenerator //: ITextOutputGenerator
         sb.AppendLine(key + ": " + v);
     }
 
-    public string DictionaryBothToStringToSingleLine<Key, Value>(Dictionary<Key, Value> sorted, bool putValueAsFirst, string delimiter = AllStringsSE.space)
+    public string DictionaryBothToStringToSingleLine<Key, Value>(Dictionary<Key, Value> sorted, bool putValueAsFirst, string delimiter = AllStrings.space)
     {
         foreach (var item in sorted)
         {
