@@ -1,4 +1,6 @@
 
+namespace SunamoTextOutputGenerator;
+
 using System.Runtime.CompilerServices;
 
 namespace

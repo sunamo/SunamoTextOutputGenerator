@@ -1,4 +1,4 @@
-namespace SunamoTextOutputGenerator._sunamo;
+namespace SunamoTextOutputGenerator;
 
 //namespace SunamoTextOutputGenerator._sunamo;
 

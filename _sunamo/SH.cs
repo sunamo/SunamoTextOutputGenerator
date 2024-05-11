@@ -1,4 +1,4 @@
-namespace SunamoTextOutputGenerator._sunamo;
+namespace SunamoTextOutputGenerator;
 
 //internal class SH
 //{
