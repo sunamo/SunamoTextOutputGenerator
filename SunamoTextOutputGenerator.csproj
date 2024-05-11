@@ -17,5 +17,21 @@
     <PackageReference Include="SunamoExceptions" Version="24.2.6.3" />
     <PackageReference Include="SunamoTextBuilder" Version="24.2.7.2" />
     <PackageReference Include="SunamoValues" Version="24.2.6.3" />
+    <Compile Include="..\SunamoData\Data\CompareCollectionsResult.cs" Link="_linked\SunamoData\Data\CompareCollectionsResult.cs" />
+    <Compile Include="..\SunamoInterfaces\Interfaces\INpmBashBuilder.cs" Link="_linked\SunamoInterfaces\Interfaces\INpmBashBuilder.cs" />
+    <Compile Include="..\SunamoValues\AllStrings.cs" Link="_linked\SunamoValues\AllStrings.cs" />
+    <Compile Include="..\SunamoInterfaces\Interfaces\ITextBuilder.cs" Link="_linked\SunamoInterfaces\Interfaces\ITextBuilder.cs" />
+    <Compile Include="..\SunamoExceptions\OnlyInSE\ThrowEx.cs" Link="_linked\SunamoExceptions\OnlyInSE\ThrowEx.cs" />
+    <Compile Include="..\SunamoInterfaces\Interfaces\IPercentCalculator.cs" Link="_linked\SunamoInterfaces\Interfaces\IPercentCalculator.cs" />
+    <Compile Include="..\SunamoInterfaces\Interfaces\ITextOutputGenerator.cs" Link="_linked\SunamoInterfaces\Interfaces\ITextOutputGenerator.cs" />
+    <Compile Include="..\SunamoValues\Constants\Messages.cs" Link="_linked\SunamoValues\Constants\Messages.cs" />
+    <Compile Include="..\SunamoValues\Consts.cs" Link="_linked\SunamoValues\Consts.cs" />
+    <Compile Include="..\SunamoExceptions\OnlyInSE\Exceptions.cs" Link="_linked\SunamoExceptions\OnlyInSE\Exceptions.cs" />
+    <Compile Include="..\SunamoExceptions\OnlyInSE\TranslateAble.cs" Link="_linked\SunamoExceptions\OnlyInSE\TranslateAble.cs" />
+    <Compile Include="..\SunamoExceptions\_AddedToAllCsproj\SHSunamoExceptions.cs" Link="_linked\SunamoExceptions\_AddedToAllCsproj\SHSunamoExceptions.cs" />
+    <Compile Include="..\SunamoExceptions\_AddedToAllCsproj\CASunamoExceptions.cs" Link="_linked\SunamoExceptions\_AddedToAllCsproj\CASunamoExceptions.cs" />
+    <Compile Include="..\SunamoValues\AllChars.cs" Link="_linked\SunamoValues\AllChars.cs" />
+    <Compile Include="..\SunamoExceptions\OnlyInSE\Exc.cs" Link="_linked\SunamoExceptions\OnlyInSE\Exc.cs" />
+    <Compile Include="..\SunamoExceptions\OnlyInSE\Types.cs" Link="_linked\SunamoExceptions\OnlyInSE\Types.cs" />
   </ItemGroup>
 </Project>
