@@ -1,4 +1,11 @@
-namespace SunamoTextOutputGenerator;
+
+namespace
+#if SunamoCollectionsGeneric
+SunamoCollectionsGeneric
+#else
+    SunamoTextOutputGenerator
+#endif
+;
 
 public class TextOutputGeneratorArgs
 {

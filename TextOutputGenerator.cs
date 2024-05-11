@@ -1,4 +1,14 @@
-namespace SunamoTextOutputGenerator;
+
+using System.Runtime.CompilerServices;
+
+namespace
+#if SunamoCollectionsGeneric
+SunamoCollectionsGeneric
+#else
+    SunamoTextOutputGenerator
+#endif
+;
+
 
 /// <summary>
 /// In Comparing
@@ -9,12 +19,13 @@ public class TextOutputGenerator //: ITextOutputGenerator
     // při převádění na nugety jsem to změnil na ITextBuilder sb = TextBuilder.Create();
     // ale asi to byla blbost, teď mám v _sunamo Create() která je ale null místo abych použil ctor
     // takže vracím nazpět.
-    public TextBuilder sb = new TextBuilder();
-    public string prependEveryNoWhite
-    {
-        get => sb.prependEveryNoWhite;
-        set => sb.prependEveryNoWhite = value;
-    }
+    //public TextBuilder sb = new TextBuilder();
+    public StringBuilder sb = new StringBuilder();
+    //public string prependEveryNoWhite
+    //{
+    //    get => sb.prependEveryNoWhite;
+    //    set => sb.prependEveryNoWhite = value;
+    //}
 
     public static TextOutputGenerator Create()
     {
@@ -242,7 +253,8 @@ public class TextOutputGenerator //: ITextOutputGenerator
 
     public void Undo()
     {
-        sb.Undo();
+        throw new NotImplementedException();
+        //sb.Undo();
     }
 
     #region Dictionary
