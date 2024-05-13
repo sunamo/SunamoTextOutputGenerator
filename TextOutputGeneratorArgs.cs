@@ -1,5 +1,4 @@
 
-namespace SunamoTextOutputGenerator;
 
 namespace
 #if SunamoCollectionsGeneric
