@@ -13,10 +13,6 @@
     <DefineConstants>$(DefineConstants);ASYNC;SunamoTextOutputGenerator</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="SunamoData" Version="24.2.6.4" />
-    <PackageReference Include="SunamoExceptions" Version="24.2.6.3" />
-    <PackageReference Include="SunamoTextBuilder" Version="24.2.7.2" />
-    <PackageReference Include="SunamoValues" Version="24.2.6.3" />
     <Compile Include="..\SunamoData\Data\CompareCollectionsResult.cs" Link="_linked\SunamoData\Data\CompareCollectionsResult.cs" />
     <Compile Include="..\SunamoInterfaces\Interfaces\INpmBashBuilder.cs" Link="_linked\SunamoInterfaces\Interfaces\INpmBashBuilder.cs" />
     <Compile Include="..\SunamoValues\AllStrings.cs" Link="_linked\SunamoValues\AllStrings.cs" />
