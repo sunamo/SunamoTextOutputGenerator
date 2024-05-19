@@ -1,5 +1,11 @@
 
-namespace SunamoTextOutputGenerator;
+namespace
+#if SunamoDevCode
+SunamoDevCode
+#else
+SunamoTextOutputGenerator
+#endif
+;
 
 
 

@@ -1,12 +1,15 @@
-﻿
 
 using System.Runtime.CompilerServices;
 
 namespace
 #if SunamoCollectionsGeneric
 SunamoCollectionsGeneric
+#elif SunamoCollections
+SunamoCollections
+#elif SunamoDevCode
+SunamoDevCode
 #else
-    SunamoTextOutputGenerator
+SunamoTextOutputGenerator
 #endif
 ;
 
@@ -36,7 +39,7 @@ public class TextOutputGenerator //: ITextOutputGenerator
     #region Static texts
     public void EndRunTime()
     {
-        sb.AppendLine(Messages.AppWillBeTerminated);
+        sb.AppendLine("AppWillBeTerminated");
     }
 
     /// <summary>
@@ -44,7 +47,7 @@ public class TextOutputGenerator //: ITextOutputGenerator
     /// </summary>
     public void NoData()
     {
-        sb.AppendLine(Messages.NoData);
+        sb.AppendLine("NoData");
     }
 
 

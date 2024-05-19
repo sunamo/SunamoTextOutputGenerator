@@ -3,8 +3,12 @@
 namespace
 #if SunamoCollectionsGeneric
 SunamoCollectionsGeneric
+#elif SunamoDevCode
+SunamoDevCode
+#elif SunamoCollections
+SunamoCollections
 #else
-    SunamoTextOutputGenerator
+SunamoTextOutputGenerator
 #endif
 ;
 

@@ -4,6 +4,7 @@ public class TextOutputGeneratorStatic
 {
     public static string CompareList(List<string> both, string v1, List<string> reposNames, string v2, List<string> l)
     {
+
         TextOutputGenerator tog = new TextOutputGenerator();
         tog.List(both, "both");
         tog.List(reposNames, v1);
