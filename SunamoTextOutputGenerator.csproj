@@ -22,5 +22,10 @@
     <Compile Include="..\SunamoValues\AllChars.cs" Link="_linked\SunamoValues\AllChars.cs" />
     <Compile Include="..\SunamoValues\AllStrings.cs" Link="_linked\SunamoValues\AllStrings.cs" />
     <Compile Include="..\SunamoValues\Consts.cs" Link="_linked\SunamoValues\Consts.cs" />
+    <Compile Include="..\SunamoExceptions\OnlyInSE\ThrowEx.cs" Link="_linked\SunamoExceptions\OnlyInSE\ThrowEx.cs" />
+    <Compile Include="..\SunamoInterfaces\Interfaces\INpmBashBuilder.cs" Link="_linked\SunamoInterfaces\Interfaces\INpmBashBuilder.cs" />
+    <Compile Include="..\SunamoInterfaces\Interfaces\ITextBuilder.cs" Link="_linked\SunamoInterfaces\Interfaces\ITextBuilder.cs" />
+    <Compile Include="..\SunamoData\Data\CompareCollectionsResult.cs" Link="_linked\SunamoData\Data\CompareCollectionsResult.cs" />
+    <Compile Include="..\SunamoInterfaces\Interfaces\IPercentCalculator.cs" Link="_linked\SunamoInterfaces\Interfaces\IPercentCalculator.cs" />
   </ItemGroup>
 </Project>

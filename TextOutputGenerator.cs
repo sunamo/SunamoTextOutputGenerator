@@ -164,7 +164,7 @@ public class TextOutputGenerator //: ITextOutputGenerator
         List<string>(files1);
     }
 
-    public void List<Value>(IList<Value> files1, string deli = Consts.nl2, string whenNoEntries = Consts.stringEmpty)
+    public void List<Value>(IList<Value> files1, string deli = "\r\n", string whenNoEntries = Consts.stringEmpty)
     {
         if (files1.Count() == 0)
         {
