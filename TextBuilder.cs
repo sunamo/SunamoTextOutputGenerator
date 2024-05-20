@@ -1,4 +1,3 @@
-
 namespace
 #if SunamoDevCode
 SunamoDevCode
@@ -6,18 +5,12 @@ SunamoDevCode
 SunamoTextOutputGenerator
 #endif
 ;
-
-
-
-
-
 /// <summary>
 /// In Comparing
 /// </summary>
 public class TextBuilder : ITextBuilder
 {
     private static Type type = typeof(TextBuilder);
-
     private bool _canUndo = false;
     private int _lastIndex = -1;
     private string _lastText = "";
@@ -28,7 +21,6 @@ public class TextBuilder : ITextBuilder
     /// </summary>
     public List<string> list { get; set; }
     private bool _useList = false;
-
     public void Clear()
     {
         if (_useList)
@@ -40,12 +32,10 @@ public class TextBuilder : ITextBuilder
             sb.Clear();
         }
     }
-
     public static ITextBuilder Create(bool useList = false)
     {
         return new TextBuilder(useList);
     }
-
     /// <summary>
     /// Když někde nastavím na true, musím i zdůvodnit proč
     /// protože mi potom nefunguje sb.sb
@@ -65,7 +55,6 @@ public class TextBuilder : ITextBuilder
             sb = new StringBuilder();
         }
     }
-
     public bool CanUndo
     {
         get
@@ -86,12 +75,10 @@ public class TextBuilder : ITextBuilder
             }
         }
     }
-
     private void UndoIsNotAllowed(string what)
     {
         ThrowEx.IsNotAllowed(what);
     }
-
     public void Undo()
     {
         if (_useList)
@@ -103,7 +90,6 @@ public class TextBuilder : ITextBuilder
             sb.Remove(_lastIndex, _lastText.Length);
         }
     }
-
     public void Append(string s)
     {
         if (_useList)
@@ -124,7 +110,6 @@ public class TextBuilder : ITextBuilder
             sb.Append(s);
         }
     }
-
     private void SetUndo(string text)
     {
         if (_useList)
@@ -137,19 +122,16 @@ public class TextBuilder : ITextBuilder
             _lastText = text;
         }
     }
-
     public void Append(object s)
     {
         string text = s.ToString();
         SetUndo(text);
         Append(text);
     }
-
     public void AppendLine()
     {
         Append(Environment.NewLine);
     }
-
     public void AppendLine(string s)
     {
         if (_useList)
@@ -162,7 +144,6 @@ public class TextBuilder : ITextBuilder
             sb.Append(prependEveryNoWhite + s + Environment.NewLine);
         }
     }
-
     /// <summary>
     /// If is use List, join it with NL.
     /// Otherwise return sb

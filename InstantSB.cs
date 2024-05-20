@@ -14,22 +14,16 @@ public class InstantSB //: StringWriter
 {
     public StringBuilder sb = new StringBuilder();
     private string _tokensDelimiter;
-
     public InstantSB(string znak)
     {
         _tokensDelimiter = znak;
     }
-
     public int Length => sb.Length;
-
     public override string ToString()
     {
         string vratit = sb.ToString();
         return vratit;
     }
-
-
-
     /// <summary>
     /// Nep�ipisuje se k celkov�mu v�stupu ,proto vrac� sv�j valstn�.
     /// </summary>
@@ -42,12 +36,10 @@ public class InstantSB //: StringWriter
             sb.Append(s + _tokensDelimiter);
         }
     }
-
     public void AddRaw(object tab)
     {
         sb.Append(tab.ToString());
     }
-
     /// <param name="polozky"></param>
     public void AddItems(params string[] polozky)
     {
@@ -56,7 +48,6 @@ public class InstantSB //: StringWriter
             AddItem(var);
         }
     }
-
     /// <summary>
     /// Append without token delimiter
     /// </summary>
@@ -69,7 +60,6 @@ public class InstantSB //: StringWriter
             sb.Append(s);
         }
     }
-
     /// <summary>
     /// Jen vol� metodu AddItem s A1 s NL
     /// </summary>
@@ -78,17 +68,14 @@ public class InstantSB //: StringWriter
     {
         EndLine(p + Environment.NewLine);
     }
-
     public void AppendLine()
     {
         EndLine(Environment.NewLine);
     }
-
     public void RemoveEndDelimiter()
     {
         sb.Remove(sb.Length - _tokensDelimiter.Length, _tokensDelimiter.Length);
     }
-
     public void Clear()
     {
         sb.Clear();
