@@ -6,6 +6,8 @@ SunamoCollectionsGeneric
 SunamoCollections
 #elif SunamoDevCode
 SunamoDevCode
+#elif SunamoFileSystem
+SunamoFileSystem
 #else
 SunamoTextOutputGenerator
 #endif
@@ -221,7 +223,7 @@ public class TextOutputGenerator //: ITextOutputGenerator
     #endregion
     public void Undo()
     {
-        throw new NotImplementedException();
+        ThrowEx.NotImplementedMethod();
         //sb.Undo();
     }
     #region Dictionary

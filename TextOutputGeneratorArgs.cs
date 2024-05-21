@@ -5,6 +5,8 @@ SunamoCollectionsGeneric
 SunamoDevCode
 #elif SunamoCollections
 SunamoCollections
+#elif SunamoFileSystem
+SunamoFileSystem
 #else
 SunamoTextOutputGenerator
 #endif
