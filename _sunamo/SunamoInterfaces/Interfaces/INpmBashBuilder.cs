@@ -1,7 +1,7 @@
 namespace SunamoTextOutputGenerator;
 
 
-public interface INpmBashBuilder
+internal interface INpmBashBuilder
 {
     void I(string args = null);
 }

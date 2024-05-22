@@ -1,9 +1,9 @@
 namespace SunamoTextOutputGenerator;
 
 
-public class CompareCollectionsResult<T>
+internal class CompareCollectionsResult<T>
 {
-    public List<T> OnlyInFirst;
-    public List<T> OnlyInSecond;
-    public List<T> Both;
+    internal List<T> OnlyInFirst;
+    internal List<T> OnlyInSecond;
+    internal List<T> Both;
 }
