@@ -1,7 +1,7 @@
 namespace SunamoTextOutputGenerator;
 
 
-internal interface IPercentCalculator
+public interface IPercentCalculator
 {
     double _overallSum { get; set; }
     double last { get; set; }
