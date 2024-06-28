@@ -1,10 +1,3 @@
-namespace
-#if SunamoDevCode
-SunamoDevCode
-#else
-SunamoTextOutputGenerator
-#endif
-;
 /// <summary>
 /// In Comparing
 /// </summary>

@@ -1,16 +1,3 @@
-namespace
-#if SunamoCollectionsGeneric
-SunamoCollectionsGeneric
-#elif SunamoDevCode
-SunamoDevCode
-#elif SunamoCollections
-SunamoCollections
-#elif SunamoFileSystem
-SunamoFileSystem
-#else
-SunamoTextOutputGenerator
-#endif
-;
 public class TextOutputGeneratorArgs
 {
     public bool headerWrappedEmptyLines = true;

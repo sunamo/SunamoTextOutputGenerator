@@ -1,17 +1,4 @@
 using System.Runtime.CompilerServices;
-namespace
-#if SunamoCollectionsGeneric
-SunamoCollectionsGeneric
-#elif SunamoCollections
-SunamoCollections
-#elif SunamoDevCode
-SunamoDevCode
-#elif SunamoFileSystem
-SunamoFileSystem
-#else
-SunamoTextOutputGenerator
-#endif
-;
 /// <summary>
 /// In Comparing
 /// </summary>
