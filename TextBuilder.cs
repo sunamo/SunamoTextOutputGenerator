@@ -1,3 +1,5 @@
+
+namespace SunamoTextOutputGenerator;
 /// <summary>
 /// In Comparing
 /// </summary>

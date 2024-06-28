@@ -1,3 +1,5 @@
+
+namespace SunamoTextOutputGenerator;
 public class TextOutputGeneratorArgs
 {
     public bool headerWrappedEmptyLines = true;
