@@ -37,7 +37,7 @@ public static class TextGenerator
     /// <typeparam name="U"></typeparam>
     /// <param name="p"></param>
     /// <returns></returns>
-    public static string GenerateListWithPercent<T, U>(Dictionary<T, IList<U>> p, IPercentCalculator pc2)
+    public static string GenerateListWithPercent<T, U>(Dictionary<T, IList<U>> p, IPercentCalculatorTog pc2)
     {
         int overall = 0;
 
@@ -46,7 +46,7 @@ public static class TextGenerator
             overall += item.Value.Count();
         }
 
-        IPercentCalculator pc = pc2.Create(overall); //new PercentCalculator(overall); ;
+        IPercentCalculatorTog pc = pc2.Create(overall); //new PercentCalculator(overall); ;
 
         TextOutputGenerator tog = new TextOutputGenerator();
 
