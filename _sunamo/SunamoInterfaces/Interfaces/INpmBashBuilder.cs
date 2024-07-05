@@ -1,4 +1,4 @@
-namespace SunamoTextOutputGenerator;
+namespace SunamoTextOutputGenerator._sunamo.SunamoInterfaces.Interfaces;
 
 
 internal interface INpmBashBuilder

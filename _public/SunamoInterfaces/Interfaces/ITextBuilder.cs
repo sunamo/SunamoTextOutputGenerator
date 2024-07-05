@@ -1,4 +1,4 @@
-namespace SunamoTextOutputGenerator;
+namespace SunamoTextOutputGenerator._public.SunamoInterfaces.Interfaces;
 
 
 public interface ITextBuilder

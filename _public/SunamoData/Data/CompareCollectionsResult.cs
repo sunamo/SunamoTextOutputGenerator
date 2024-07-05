@@ -1,4 +1,4 @@
-namespace SunamoTextOutputGenerator;
+namespace SunamoTextOutputGenerator._public.SunamoData.Data;
 
 
 public class CompareCollectionsResult<T>
