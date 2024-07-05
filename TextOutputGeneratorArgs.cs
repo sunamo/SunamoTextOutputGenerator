@@ -1,4 +1,3 @@
-
 namespace SunamoTextOutputGenerator;
 public class TextOutputGeneratorArgs
 {

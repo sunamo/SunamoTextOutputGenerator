@@ -1,5 +1,3 @@
-
-
 namespace SunamoTextOutputGenerator;
 public class CompareCollectionsResults : List<CompareCollectionsResult<string>>
 {

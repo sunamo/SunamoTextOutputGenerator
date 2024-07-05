@@ -18,3 +18,6 @@ global using SunamoTextOutputGenerator._public.SunamoInterfaces.Interfaces;
 global using SunamoTextOutputGenerator._sunamo.SunamoExceptions.OnlyInSE;
 global using SunamoTextOutputGenerator._sunamo.SunamoExceptions._AddedToAllCsproj;
 global using SunamoTextOutputGenerator._sunamo.SunamoInterfaces.Interfaces;
+global using System.Diagnostics;
+global using System.Net;
+global using System.Threading.Tasks;

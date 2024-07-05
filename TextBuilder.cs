@@ -1,4 +1,3 @@
-
 namespace SunamoTextOutputGenerator;
 /// <summary>
 /// In Comparing

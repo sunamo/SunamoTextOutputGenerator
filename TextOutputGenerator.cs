@@ -1,6 +1,4 @@
-
 namespace SunamoTextOutputGenerator;
-using System.Runtime.CompilerServices;
 /// <summary>
 /// In Comparing
 /// </summary>

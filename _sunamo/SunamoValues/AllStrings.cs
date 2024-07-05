@@ -1,4 +1,3 @@
-
 namespace SunamoTextOutputGenerator._sunamo.SunamoValues;
 internal class AllStrings
 {
