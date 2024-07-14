@@ -15,6 +15,9 @@ public class TextOutputGenerator //: ITextOutputGenerator
     //    get => sb.prependEveryNoWhite;
     //    set => sb.prependEveryNoWhite = value;
     //}
+
+
+
     public static TextOutputGenerator Create()
     {
         return new TextOutputGenerator();
