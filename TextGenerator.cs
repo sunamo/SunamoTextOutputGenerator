@@ -1,4 +1,5 @@
 namespace SunamoTextOutputGenerator;
+
 /// <summary>
 /// TextWriterList - instance
 /// TextBuilder - instance

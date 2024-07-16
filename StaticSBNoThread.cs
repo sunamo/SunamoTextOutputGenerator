@@ -1,4 +1,5 @@
 namespace SunamoTextOutputGenerator;
+
 public class StaticSBNoThread
 {
     public static StringBuilder sb = new StringBuilder();

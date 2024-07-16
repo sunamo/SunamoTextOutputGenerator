@@ -1,4 +1,5 @@
 namespace SunamoTextOutputGenerator;
+
 public class CompareCollectionsResults : List<CompareCollectionsResult<string>>
 {
     public static string TextOutput(List<string> onlyInFirst, List<string> onlyInSecond, List<string> both = null)
