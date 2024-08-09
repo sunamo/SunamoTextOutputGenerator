@@ -2,7 +2,7 @@ namespace SunamoTextOutputGenerator;
 
 public class StaticSBNoThread
 {
-    public static StringBuilder sb = new StringBuilder();
+    public static StringBuilder sb = new();
 
     public static void Clear()
     {

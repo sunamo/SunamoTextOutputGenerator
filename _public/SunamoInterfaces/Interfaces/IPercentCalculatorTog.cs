@@ -1,6 +1,5 @@
 namespace SunamoTextOutputGenerator._public.SunamoInterfaces.Interfaces;
 
-
 public interface IPercentCalculatorTog
 {
     double _overallSum { get; set; }

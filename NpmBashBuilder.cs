@@ -1,10 +1,8 @@
 namespace SunamoTextOutputGenerator;
 
-
-
 public class NpmBashBuilder : INpmBashBuilder
 {
-    public TextBuilder sb = null;
+    public TextBuilder sb;
 
     public NpmBashBuilder()
     {
@@ -18,15 +16,14 @@ public class NpmBashBuilder : INpmBashBuilder
         //this.sb.sb = sb.sb;
     }
 
-    void Npm(string remainCommand)
-    {
-        sb.Append("npm " + remainCommand);
-        sb.AppendLine();
-    }
-
     public void I(string args = null)
     {
         Npm("i " + args);
+    }
 
+    private void Npm(string remainCommand)
+    {
+        sb.Append("npm " + remainCommand);
+        sb.AppendLine();
     }
 }
