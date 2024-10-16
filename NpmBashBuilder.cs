@@ -7,7 +7,7 @@ public class NpmBashBuilder : INpmBashBuilder
     public NpmBashBuilder()
     {
         sb = new TextBuilder();
-        sb.prependEveryNoWhite = AllStrings.space;
+        sb.prependEveryNoWhite = "";
     }
 
     public NpmBashBuilder(TextBuilder sb)

@@ -5,7 +5,7 @@ global using System.Text;
 global using System.Collections;
 global using System.Runtime.CompilerServices;
 global using System.IO;
-global using SunamoTextOutputGenerator._sunamo.SunamoValues;
+global using SunamoTextOutputGenerator;
 global using SunamoTextOutputGenerator._public.SunamoData.Data;
 global using SunamoTextOutputGenerator._public.SunamoInterfaces.Interfaces;
 global using SunamoTextOutputGenerator._sunamo.SunamoExceptions;
