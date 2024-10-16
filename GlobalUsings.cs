@@ -12,3 +12,4 @@ global using SunamoTextOutputGenerator._sunamo.SunamoInterfaces.Interfaces;
 global using System.Diagnostics;
 global using System.Reflection;
 global using System.Net;
+global using System.Diagnostics.CodeAnalysis;
