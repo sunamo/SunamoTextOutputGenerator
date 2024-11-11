@@ -248,7 +248,7 @@ public class TextOutputGenerator //: ITextOutputGenerator
     public void DictionaryKeyValuePair<T1, T2>(string header, IOrderedEnumerable<KeyValuePair<T1, T2>> ordered)
     {
         Header(header);
-        foreach (var item in ordered) sb.AppendLine(item.Key + "" + item.Value);
+        foreach (var item in ordered) sb.AppendLine(item.Key + " " + item.Value);
     }
 
     public void IGrouping(IEnumerable<IGrouping<string, string>> g)
@@ -275,7 +275,7 @@ public class TextOutputGenerator //: ITextOutputGenerator
         if (onlyCountInValue)
         {
             var d = new List<string>(ls.Count);
-            foreach (var item in ls) d.Add(item.Key + "" + item.Value.Count());
+            foreach (var item in ls) d.Add(item.Key + " " + item.Value.Count());
             List(d);
         }
         else
@@ -325,7 +325,7 @@ public class TextOutputGenerator //: ITextOutputGenerator
     }
 
     public string DictionaryBothToStringToSingleLine<Key, Value>(Dictionary<Key, Value> sorted, bool putValueAsFirst,
-        string delimiter = "")
+        string delimiter = " ")
     {
         foreach (var item in sorted)
         {
