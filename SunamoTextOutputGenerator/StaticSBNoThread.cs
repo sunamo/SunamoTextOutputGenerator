@@ -1,21 +1,24 @@
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
+
 namespace SunamoTextOutputGenerator;
 
 public class StaticSBNoThread
 {
-    public static StringBuilder sb = new();
+    public static StringBuilder stringBuilder = new();
 
     public static void Clear()
     {
-        sb.Clear();
+        stringBuilder.Clear();
     }
 
     public static void Append(string t)
     {
-        sb.Append(t);
+        stringBuilder.Append(t);
     }
 
     public new static string ToString()
     {
-        return sb.ToString();
+        return stringBuilder.ToString();
     }
 }

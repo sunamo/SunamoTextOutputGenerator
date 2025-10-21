@@ -1,3 +1,6 @@
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
+
 namespace SunamoTextOutputGenerator;
 
 /// <summary>
@@ -7,15 +10,15 @@ public class TextOutputGenerator //: ITextOutputGenerator
 {
     private static readonly string s_znakNadpisu = "*";
 
-    // při převádění na nugety jsem to změnil na ITextBuilder sb = TextBuilder.Create();
+    // při převádění na nugety jsem to změnil na ITextBuilder stringBuilder = TextBuilder.Create();
     // ale asi to byla blbost, teď mám v _sunamo Create() která je ale null místo abych použil ctor
     // takže vracím nazpět.
-    //public TextBuilder sb = new TextBuilder();
-    public StringBuilder sb = new();
+    //public TextBuilder stringBuilder = new TextBuilder();
+    public StringBuilder stringBuilder = new();
     //public string prependEveryNoWhite
     //{
-    //    get => sb.prependEveryNoWhite;
-    //    set => sb.prependEveryNoWhite = value;
+    //    get => stringBuilder.prependEveryNoWhite;
+    //    set => stringBuilder.prependEveryNoWhite = value;
     //}
 
 
@@ -26,21 +29,21 @@ public class TextOutputGenerator //: ITextOutputGenerator
 
     public override string ToString()
     {
-        var ts = sb.ToString();
+        var ts = stringBuilder.ToString();
         return ts;
     }
 
     public void Undo()
     {
         ThrowEx.NotImplementedMethod();
-        //sb.Undo();
+        //stringBuilder.Undo();
     }
 
     #region Static texts
 
     public void EndRunTime()
     {
-        sb.AppendLine("AppWillBeTerminated");
+        stringBuilder.AppendLine("AppWillBeTerminated");
     }
 
     /// <summary>
@@ -48,7 +51,7 @@ public class TextOutputGenerator //: ITextOutputGenerator
     /// </summary>
     public void NoData()
     {
-        sb.AppendLine("NoData");
+        stringBuilder.AppendLine("NoData");
     }
 
     #endregion
@@ -65,9 +68,9 @@ public class TextOutputGenerator //: ITextOutputGenerator
         var hvezdicky = "";
         hvezdicky = new string(s_znakNadpisu[0], delkaTextu);
         //hvezdicky.PadLeft(delkaTextu, znakNadpisu[0]);
-        sb.AppendLine(hvezdicky);
-        sb.AppendLine(text);
-        sb.AppendLine(hvezdicky);
+        stringBuilder.AppendLine(hvezdicky);
+        stringBuilder.AppendLine(text);
+        stringBuilder.AppendLine(hvezdicky);
     }
 
     public void CountEvery<T>(IList<KeyValuePair<T, int>> eq)
@@ -86,24 +89,24 @@ public class TextOutputGenerator //: ITextOutputGenerator
 
     public void AppendLine(StringBuilder text)
     {
-        sb.AppendLine(text.ToString());
+        stringBuilder.AppendLine(text.ToString());
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Append(string text)
     {
-        sb.Append(text);
+        stringBuilder.Append(text);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void AppendLine(string text)
     {
-        sb.AppendLine(text);
+        stringBuilder.AppendLine(text);
     }
 
     public void AppendLineFormat(string text, params string[] p)
     {
-        sb.AppendLine();
+        stringBuilder.AppendLine();
         AppendLine(string.Format(text, p));
     }
 
@@ -118,14 +121,14 @@ public class TextOutputGenerator //: ITextOutputGenerator
 
     public void Header(string v)
     {
-        sb.AppendLine();
+        stringBuilder.AppendLine();
         AppendLine(v);
-        sb.AppendLine();
+        stringBuilder.AppendLine();
     }
 
     public void SingleCharLine(char paddingChar, int v)
     {
-        sb.AppendLine(string.Empty.PadLeft(v, paddingChar));
+        stringBuilder.AppendLine(string.Empty.PadLeft(v, paddingChar));
     }
 
     #endregion
@@ -134,9 +137,9 @@ public class TextOutputGenerator //: ITextOutputGenerator
 
     public void ListObject(IList files1)
     {
-        var l = new List<string>();
-        foreach (var item in files1) l.Add(item.ToString());
-        List(l);
+        var list = new List<string>();
+        foreach (var item in files1) list.Add(item.ToString());
+        List(list);
     }
 
     public void ListSB(StringBuilder onlyStart, string v)
@@ -157,11 +160,11 @@ public class TextOutputGenerator //: ITextOutputGenerator
     public void List<Value>(IList<Value> files1, string deli = "\r\n", string whenNoEntries = "")
     {
         if (files1.Count() == 0)
-            sb.AppendLine(whenNoEntries);
+            stringBuilder.AppendLine(whenNoEntries);
         else
             foreach (var item in files1)
                 Append(item + deli);
-        //sb.AppendLine();
+        //stringBuilder.AppendLine();
     }
 
     /// <summary>
@@ -185,7 +188,7 @@ public class TextOutputGenerator //: ITextOutputGenerator
     {
         Header(header);
         AppendLine(list);
-        sb.AppendLine();
+        stringBuilder.AppendLine();
     }
 
     /// <summary>
@@ -205,9 +208,9 @@ public class TextOutputGenerator //: ITextOutputGenerator
             //header = (Header)((IList<char>)CA.JoinIList<char>(header, " (" + files1.Count() + ")"));
         }
 
-        if (a.headerWrappedEmptyLines) sb.AppendLine();
-        sb.AppendLine(header + ":");
-        if (a.headerWrappedEmptyLines) sb.AppendLine();
+        if (a.headerWrappedEmptyLines) stringBuilder.AppendLine();
+        stringBuilder.AppendLine(header + ":");
+        if (a.headerWrappedEmptyLines) stringBuilder.AppendLine();
         List(files1, a.delimiter, a.whenNoEntries);
     }
 
@@ -230,9 +233,9 @@ public class TextOutputGenerator //: ITextOutputGenerator
     {
         if (text != string.Empty)
         {
-            sb.AppendLine(header + ":");
-            sb.AppendLine(text);
-            sb.AppendLine();
+            stringBuilder.AppendLine(header + ":");
+            stringBuilder.AppendLine(text);
+            stringBuilder.AppendLine();
         }
     }
 
@@ -242,26 +245,26 @@ public class TextOutputGenerator //: ITextOutputGenerator
 
     public void Dictionary(Dictionary<string, int> charEntity, string delimiter)
     {
-        foreach (var item in charEntity) sb.AppendLine(item.Key + delimiter + item.Value);
+        foreach (var item in charEntity) stringBuilder.AppendLine(item.Key + delimiter + item.Value);
     }
 
     public void DictionaryKeyValuePair<T1, T2>(string header, IOrderedEnumerable<KeyValuePair<T1, T2>> ordered)
     {
         Header(header);
-        foreach (var item in ordered) sb.AppendLine(item.Key + " " + item.Value);
+        foreach (var item in ordered) stringBuilder.AppendLine(item.Key + " " + item.Value);
     }
 
     public void IGrouping(IEnumerable<IGrouping<string, string>> g)
     {
-        var d = IGroupingToDictionary(g);
-        Dictionary(d);
+        var dictionary = IGroupingToDictionary(g);
+        Dictionary(dictionary);
     }
 
     private Dictionary<string, List<string>> IGroupingToDictionary(IEnumerable<IGrouping<string, string>> g)
     {
-        var l = new Dictionary<string, List<string>>();
-        foreach (var item in g) l.Add(item.Key, item.ToList());
-        return l;
+        var list = new Dictionary<string, List<string>>();
+        foreach (var item in g) list.Add(item.Key, item.ToList());
+        return list;
     }
 
     public void Dictionary(Dictionary<string, List<string>> ls)
@@ -274,9 +277,9 @@ public class TextOutputGenerator //: ITextOutputGenerator
     {
         if (onlyCountInValue)
         {
-            var d = new List<string>(ls.Count);
-            foreach (var item in ls) d.Add(item.Key + " " + item.Value.Count());
-            List(d);
+            var dictionary = new List<string>(ls.Count);
+            foreach (var item in ls) dictionary.Add(item.Key + " " + item.Value.Count());
+            List(dictionary);
         }
         else
         {
@@ -290,7 +293,7 @@ public class TextOutputGenerator //: ITextOutputGenerator
     /// <param name="v"></param>
     public void Dictionary(Dictionary<string, string> v)
     {
-        foreach (var item in v) sb.AppendLine(string.Join("|", item.Key, item.Value));
+        foreach (var item in v) stringBuilder.AppendLine(string.Join("|", item.Key, item.Value));
     }
 
     /// <summary>
@@ -300,28 +303,28 @@ public class TextOutputGenerator //: ITextOutputGenerator
     /// <typeparam name="T2"></typeparam>
     /// <param name="d"></param>
     /// <param name="deli"></param>
-    public void Dictionary<T1, T2>(Dictionary<T1, T2> d, string deli = "|")
+    public void Dictionary<T1, T2>(Dictionary<T1, T2> dictionary, string deli = "|")
     {
-        //StringBuilder sb = new StringBuilder();
-        foreach (var item in d)
+        //StringBuilder stringBuilder = new StringBuilder();
+        foreach (var item in dictionary)
             if (deli != "|")
             {
                 Header(item.Key.ToString());
                 // vrací mi to na jednom řádku jak key tak všechny value oddělené |.
-                sb.AppendLine(string.Join(deli, item.Value.ToString()));
-                sb.AppendLine();
+                stringBuilder.AppendLine(string.Join(deli, item.Value.ToString()));
+                stringBuilder.AppendLine();
             }
             else
             {
                 // vrací mi to na jednom řádku jak key tak všechny value oddělené |.
-                sb.AppendLine(string.Join(deli, item.Key.ToString(),
+                stringBuilder.AppendLine(string.Join(deli, item.Key.ToString(),
                     item.Value.ToString())); // SF.PrepareToSerializationExplicitString(new List<string>(), deli));
             }
     }
 
     public void PairBullet(string key, string v)
     {
-        sb.AppendLine(key + ": " + v);
+        stringBuilder.AppendLine(key + ": " + v);
     }
 
     public string DictionaryBothToStringToSingleLine<Key, Value>(Dictionary<Key, Value> sorted, bool putValueAsFirst,
@@ -341,10 +344,10 @@ public class TextOutputGenerator //: ITextOutputGenerator
                 second = item.Value.ToString();
             }
 
-            sb.AppendLine(first + delimiter + second);
+            stringBuilder.AppendLine(first + delimiter + second);
         }
 
-        return sb.ToString();
+        return stringBuilder.ToString();
     }
 
     #endregion

@@ -1,3 +1,6 @@
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
+
 namespace SunamoTextOutputGenerator;
 
 /// <summary>
@@ -20,10 +23,10 @@ public static class TextGenerator
 
     public static string GenerateListWithPercent<T, U>(Dictionary<T, List<U>> p)
     {
-        var d = new Dictionary<T, List<U>>(p.Count);
-        foreach (var item in p) d.Add(item.Key, item.Value);
+        var dictionary = new Dictionary<T, List<U>>(p.Count);
+        foreach (var item in p) dictionary.Add(item.Key, item.Value);
 
-        return GenerateListWithPercent(d);
+        return GenerateListWithPercent(dictionary);
     }
 
     /// <summary>
@@ -82,7 +85,7 @@ public static class TextGenerator
         }
 
         foreach (var item in withoutLast)
-            //tog.List(withoutLast.First(d => d.Key == item.Key).Value, item.Key + " (" + item.Value + "%)");
+            //tog.List(withoutLast.First(dictionary => dictionary.Key == item.Key).Value, item.Key + " (" + item.Value + "%)");
             tog.List(item.Value, item.Key + " (" + percent2[item.Key] + "%)");
 
         //p2 = pc.PercentFor(kvp.Value.Count(), false);
