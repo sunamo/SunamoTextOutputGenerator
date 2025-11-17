@@ -18,17 +18,17 @@ public class CompareCollectionsResults : List<CompareCollectionsResult<string>>
 
             textOutputGenerator.Header("Managed:");
 
-            foreach (var item in result.OnlyInFirst) textOutputGenerator.sb.AppendLine(item);
+            foreach (var item in result.OnlyInFirst) textOutputGenerator.stringBuilder.AppendLine(item);
 
             textOutputGenerator.Header("Restored:");
 
-            foreach (var item in result.OnlyInSecond) textOutputGenerator.sb.AppendLine(item);
+            foreach (var item in result.OnlyInSecond) textOutputGenerator.stringBuilder.AppendLine(item);
 
             if (result.Both != null)
             {
                 textOutputGenerator.Header("Founded:");
 
-                foreach (var item in result.Both) textOutputGenerator.sb.AppendLine(item);
+                foreach (var item in result.Both) textOutputGenerator.stringBuilder.AppendLine(item);
             }
 
             return textOutputGenerator.ToString();
