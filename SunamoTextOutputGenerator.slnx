@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="SunamoTextOutputGenerator.Tests\SunamoTextOutputGenerator.Tests.csproj" />
+  <Project Path="RunnerTextOutputGenerator\RunnerTextOutputGenerator.csproj" />
+  <Project Path="SunamoTextOutputGenerator\SunamoTextOutputGenerator.csproj" />
+</Solution>
