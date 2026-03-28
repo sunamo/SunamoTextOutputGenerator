@@ -1,24 +1,34 @@
 namespace SunamoTextOutputGenerator.Tests;
 
+/// <summary>
+/// Tests for the TextOutputGenerator class.
+/// </summary>
 public class TextOutputGeneratorTests
 {
+    /// <summary>
+    /// Tests that IGrouping correctly formats grouped strings.
+    /// </summary>
     [Fact]
     public void IGroupingTest()
     {
-        List<string> a = new List<string>();
-        a.Add("z\\a");
-        a.Add("z\\a");
-        a.Add("z\\b");
-        a.Add("z\\b");
-        a.Add("z\\c");
+        List<string> list = new List<string>();
+        list.Add("z\\a");
+        list.Add("z\\a");
+        list.Add("z\\b");
+        list.Add("z\\b");
+        list.Add("z\\c");
 
-        var grouped2 = a.GroupBy(d => Path.GetFileNameWithoutExtension(d));
+        var grouped = list.GroupBy(text => Path.GetFileNameWithoutExtension(text));
 
-        var sameFn2 = grouped2.Where(d => d.Count() > 1);
+        var duplicates = grouped.Where(group => group.Count() > 1);
 
-        TextOutputGenerator tog = new TextOutputGenerator();
-        tog.IGrouping(sameFn2);
+        TextOutputGenerator generator = new TextOutputGenerator();
+        generator.IGrouping(duplicates);
 
-        var ts = tog.ToString();
+        var result = generator.ToString();
+
+        Assert.NotNull(result);
+        Assert.Contains("a", result);
+        Assert.Contains("b", result);
     }
 }

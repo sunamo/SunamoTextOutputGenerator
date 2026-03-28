@@ -1,18 +1,24 @@
 namespace sunamo.Tests.Generator.Text;
 
+/// <summary>
+/// Tests for the TextBuilder class.
+/// </summary>
 public class TextBuilderTests
 {
+    /// <summary>
+    /// Tests that undo reverts the last append operation.
+    /// </summary>
     [Fact]
     public void UndoTest()
     {
-        TextBuilder tb = new TextBuilder();
-        tb.CanUndo = true;
+        TextBuilder textBuilder = new TextBuilder();
+        textBuilder.CanUndo = true;
         string original = "Ahoj";
-        
-        tb.Append(original);
-        tb.Append("Svete");
-        
-        tb.Undo();
-        Assert.Equal(original, tb.ToString());
+
+        textBuilder.Append(original);
+        textBuilder.Append("Svete");
+
+        textBuilder.Undo();
+        Assert.Equal(original, textBuilder.ToString());
     }
 }

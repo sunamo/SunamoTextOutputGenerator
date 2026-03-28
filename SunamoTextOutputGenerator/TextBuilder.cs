@@ -1,142 +1,173 @@
 namespace SunamoTextOutputGenerator;
 
 /// <summary>
-///     In Comparing
+/// Text builder that supports both StringBuilder and List modes with undo capability.
 /// </summary>
 public class TextBuilder : ITextBuilder
 {
-    private static Type type = typeof(TextBuilder);
-    private bool _canUndo;
-    private int _lastIndex = -1;
-    private string _lastText = "";
-    private readonly bool _useList;
-    public StringBuilder sb;
+    private bool canUndo;
+    private int lastIndex = -1;
+    private string lastText = "";
+    private readonly bool isUsingList;
 
     /// <summary>
-    ///     Když někde nastavím na true, musím i zdůvodnit proč
-    ///     protože mi potom nefunguje sb.sb
-    ///     jako teď když jsem připojoval git do ps
-    ///     git počítal s sb ale ps s lines
+    /// Gets or sets the internal StringBuilder used when not in list mode.
     /// </summary>
-    /// <param name="useList"></param>
-    public TextBuilder(bool useList = false)
+    public StringBuilder Builder { get; set; } = new();
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="TextBuilder"/> class.
+    /// </summary>
+    /// <param name="isUsingList">When true, uses a list of strings instead of StringBuilder.
+    /// Setting this to true requires justification because it changes the internal storage mode.</param>
+    public TextBuilder(bool isUsingList = false)
     {
-        _useList = useList;
-        if (useList)
-            list = new List<string>();
-        else
-            sb = new StringBuilder();
+        this.isUsingList = isUsingList;
+        if (isUsingList)
+            List = new List<string>();
     }
 
-    public string prependEveryNoWhite { get; set; } = string.Empty;
+    /// <summary>
+    /// Gets or sets text to prepend before every non-whitespace append.
+    /// </summary>
+    public string PrependEveryNoWhite { get; set; } = string.Empty;
 
     /// <summary>
-    ///     For PowershellRunner
+    /// Gets or sets the list of lines used in list mode (e.g. for PowershellRunner).
     /// </summary>
-    public List<string> list { get; set; }
+    public List<string>? List { get; set; }
 
+    /// <summary>
+    /// Clears all content.
+    /// </summary>
     public void Clear()
     {
-        if (_useList)
-            list.Clear();
+        if (isUsingList)
+            List!.Clear();
         else
-            sb.Clear();
+            Builder.Clear();
     }
 
+    /// <summary>
+    /// Gets or sets a value indicating whether undo operation is enabled.
+    /// </summary>
     public bool CanUndo
     {
         get
         {
-            if (_useList) return false;
-            return _canUndo;
+            if (isUsingList) return false;
+            return canUndo;
         }
         set
         {
-            _canUndo = value;
+            canUndo = value;
             if (!value)
             {
-                _lastIndex = -1;
-                _lastText = "";
+                lastIndex = -1;
+                lastText = "";
             }
         }
     }
 
+    /// <summary>
+    /// Undoes the last append operation.
+    /// </summary>
     public void Undo()
     {
-        if (_useList) UndoIsNotAllowed("Undo");
-        if (_lastIndex != -1) sb.Remove(_lastIndex, _lastText.Length);
+        if (isUsingList) UndoIsNotAllowed("Undo");
+        if (lastIndex != -1) Builder.Remove(lastIndex, lastText.Length);
     }
 
-    public void Append(string s)
+    /// <summary>
+    /// Appends text.
+    /// </summary>
+    /// <param name="text">The text to append.</param>
+    public void Append(string text)
     {
-        if (_useList)
+        if (isUsingList)
         {
-            if (list.Count > 0)
-                list[list.Count - 1] += s;
+            if (List!.Count > 0)
+                List[List.Count - 1] += text;
             else
-                list.Add(s);
+                List.Add(text);
         }
         else
         {
-            SetUndo(s);
-            sb.Append(prependEveryNoWhite);
-            sb.Append(s);
+            SetUndo(text);
+            Builder.Append(PrependEveryNoWhite);
+            Builder.Append(text);
         }
     }
 
-    public void Append(object s)
+    /// <summary>
+    /// Appends the string representation of an object.
+    /// </summary>
+    /// <param name="value">The object to append.</param>
+    public void Append(object value)
     {
-        var text = s.ToString();
+        var text = value.ToString() ?? string.Empty;
         SetUndo(text);
         Append(text);
     }
 
+    /// <summary>
+    /// Appends a new line.
+    /// </summary>
     public void AppendLine()
     {
         Append(Environment.NewLine);
     }
 
-    public void AppendLine(string s)
+    /// <summary>
+    /// Appends text followed by a new line.
+    /// </summary>
+    /// <param name="text">The text to append.</param>
+    public void AppendLine(string text)
     {
-        if (_useList)
+        if (isUsingList)
         {
-            list.Add(prependEveryNoWhite + s);
+            List!.Add(PrependEveryNoWhite + text);
         }
         else
         {
-            SetUndo(s);
-            sb.Append(prependEveryNoWhite + s + Environment.NewLine);
+            SetUndo(text);
+            Builder.Append(PrependEveryNoWhite + text + Environment.NewLine);
         }
     }
 
     /// <summary>
-    ///     If is use List, join it with NL.
-    ///     Otherwise return sb
+    /// Returns the built text. If using list mode, joins lines with newlines.
     /// </summary>
+    /// <returns>The built text as a string.</returns>
     public override string ToString()
     {
-        if (_useList)
-            return string.Join(Environment.NewLine, list);
-        return sb.ToString();
+        if (isUsingList)
+            return string.Join(Environment.NewLine, List!);
+        return Builder.ToString();
     }
 
-    public static ITextBuilder Create(bool useList = false)
+    /// <summary>
+    /// Creates a new ITextBuilder instance.
+    /// </summary>
+    /// <param name="isUsingList">Whether to use list mode.</param>
+    /// <returns>A new ITextBuilder instance.</returns>
+    public static ITextBuilder Create(bool isUsingList = false)
     {
-        return new TextBuilder(useList);
+        return new TextBuilder(isUsingList);
     }
 
-    private void UndoIsNotAllowed(string what)
+    private void UndoIsNotAllowed(string operationName)
     {
-        ThrowEx.IsNotAllowed(what);
+        ThrowEx.IsNotAllowed(operationName);
     }
 
     private void SetUndo(string text)
     {
-        if (_useList) UndoIsNotAllowed("SetUndo");
+        if (isUsingList) UndoIsNotAllowed("SetUndo");
         if (CanUndo)
         {
-            _lastIndex = sb.Length;
-            _lastText = text;
+            lastIndex = Builder.Length;
+            lastText = text;
         }
     }
 }

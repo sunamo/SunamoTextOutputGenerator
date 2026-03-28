@@ -1,29 +1,34 @@
 namespace SunamoTextOutputGenerator._sunamo.SunamoExceptions;
 
-// EN: Variable names have been checked and replaced with self-descriptive names
-// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
+/// <summary>
+/// Provides methods for throwing exceptions with detailed context information.
+/// </summary>
 internal partial class ThrowEx
 {
+    internal static bool IsNotAllowed(string operationName)
+    {
+        return ThrowIsNotNull(Exceptions.IsNotAllowed(FullNameOfExecutedCode(), operationName));
+    }
 
-    internal static bool IsNotAllowed(string what)
-    { return ThrowIsNotNull(Exceptions.IsNotAllowed(FullNameOfExecutedCode(), what)); }
-
-    internal static bool NotImplementedMethod() { return ThrowIsNotNull(Exceptions.NotImplementedMethod); }
+    internal static bool NotImplementedMethod()
+    {
+        return ThrowIsNotNull(Exceptions.NotImplementedMethod);
+    }
 
     #region Other
     internal static string FullNameOfExecutedCode()
     {
-        Tuple<string, string, string> placeOfExc = Exceptions.PlaceOfException();
-        string f = FullNameOfExecutedCode(placeOfExc.Item1, placeOfExc.Item2, true);
-        return f;
+        Tuple<string, string, string> placeOfException = Exceptions.PlaceOfException();
+        string fullName = FullNameOfExecutedCode(placeOfException.Item1, placeOfException.Item2, true);
+        return fullName;
     }
 
-    static string FullNameOfExecutedCode(object type, string methodName, bool fromThrowEx = false)
+    private static string FullNameOfExecutedCode(object type, string methodName, bool isFromThrowEx = false)
     {
         if (methodName == null)
         {
             int depth = 2;
-            if (fromThrowEx)
+            if (isFromThrowEx)
             {
                 depth++;
             }
@@ -31,14 +36,14 @@ internal partial class ThrowEx
             methodName = Exceptions.CallingMethod(depth);
         }
         string typeFullName;
-        if (type is Type type2)
+        if (type is Type typeValue)
         {
-            typeFullName = type2.FullName ?? "Type cannot be get via type is Type type2";
+            typeFullName = typeValue.FullName ?? "Type cannot be get via type is Type typeValue";
         }
-        else if (type is MethodBase method)
+        else if (type is MethodBase methodBase)
         {
-            typeFullName = method.ReflectedType?.FullName ?? "Type cannot be get via type is MethodBase method";
-            methodName = method.Name;
+            typeFullName = methodBase.ReflectedType?.FullName ?? "Type cannot be get via type is MethodBase methodBase";
+            methodName = methodBase.Name;
         }
         else if (type is string)
         {
@@ -46,20 +51,20 @@ internal partial class ThrowEx
         }
         else
         {
-            Type t = type.GetType();
-            typeFullName = t.FullName ?? "Type cannot be get via type.GetType()";
+            Type resolvedType = type.GetType();
+            typeFullName = resolvedType.FullName ?? "Type cannot be get via type.GetType()";
         }
         return string.Concat(typeFullName, ".", methodName);
     }
 
-    internal static bool ThrowIsNotNull(string? exception, bool reallyThrow = true)
+    internal static bool ThrowIsNotNull(string? exceptionMessage, bool isReallyThrowing = true)
     {
-        if (exception != null)
+        if (exceptionMessage != null)
         {
             Debugger.Break();
-            if (reallyThrow)
+            if (isReallyThrowing)
             {
-                throw new Exception(exception);
+                throw new Exception(exceptionMessage);
             }
             return true;
         }
@@ -68,12 +73,10 @@ internal partial class ThrowEx
 
     #region For avoid FullNameOfExecutedCode
 
-
-
-    internal static bool ThrowIsNotNull(Func<string, string?> f)
+    internal static bool ThrowIsNotNull(Func<string, string?> exceptionFactory)
     {
-        string? exc = f(FullNameOfExecutedCode());
-        return ThrowIsNotNull(exc);
+        string? exceptionMessage = exceptionFactory(FullNameOfExecutedCode());
+        return ThrowIsNotNull(exceptionMessage);
     }
     #endregion
     #endregion

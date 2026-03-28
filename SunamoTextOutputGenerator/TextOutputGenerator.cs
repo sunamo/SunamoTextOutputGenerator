@@ -1,247 +1,331 @@
 namespace SunamoTextOutputGenerator;
 
-// EN: Variable names have been checked and replaced with self-descriptive names
-// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 /// <summary>
-///     In Comparing
+/// Generates formatted text output with headers, lists, paragraphs, and dictionary formatting.
 /// </summary>
 public partial class TextOutputGenerator
 {
-    private static readonly string s_znakNadpisu = "*";
-    // při převádění na nugety jsem to změnil na ITextBuilder stringBuilder = TextBuilder.Create();
-    // ale asi to byla blbost, teď mám v _sunamo Create() která je ale null místo abych použil ctor
-    // takže vracím nazpět.
-    //public TextBuilder stringBuilder = new TextBuilder();
-    public StringBuilder stringBuilder = new();
-    //public string prependEveryNoWhite
-    //{
-    //    get => stringBuilder.prependEveryNoWhite;
-    //    set => stringBuilder.prependEveryNoWhite = value;
-    //}
+    private const string headerCharacter = "*";
+
+    /// <summary>
+    /// Gets or sets the StringBuilder used for text accumulation.
+    /// </summary>
+    public StringBuilder Builder { get; set; } = new();
+
+    /// <summary>
+    /// Creates a new instance of <see cref="TextOutputGenerator"/>.
+    /// </summary>
+    /// <returns>A new TextOutputGenerator instance.</returns>
     public static TextOutputGenerator Create()
     {
         return new TextOutputGenerator();
     }
 
+    /// <summary>
+    /// Returns all accumulated text as a string.
+    /// </summary>
+    /// <returns>The generated text output.</returns>
     public override string ToString()
     {
-        var ts = stringBuilder.ToString();
-        return ts;
+        var result = Builder.ToString();
+        return result;
     }
 
+    /// <summary>
+    /// Undoes the last operation. Not implemented.
+    /// </summary>
     public void Undo()
     {
         ThrowEx.NotImplementedMethod();
-    //stringBuilder.Undo();
-    }
-
-    public void EndRunTime()
-    {
-        stringBuilder.AppendLine("AppWillBeTerminated");
     }
 
     /// <summary>
-    ///     Pouze vypíše "Az budete mit vstupní data, spusťte program znovu."
+    /// Appends a termination message.
+    /// </summary>
+    public void EndRunTime()
+    {
+        Builder.AppendLine("AppWillBeTerminated");
+    }
+
+    /// <summary>
+    /// Appends a message indicating no data is available.
     /// </summary>
     public void NoData()
     {
-        stringBuilder.AppendLine("NoData");
+        Builder.AppendLine("NoData");
     }
 
     /// <summary>
-    ///     Napíše nadpis A1 do konzole
+    /// Writes a decorated header with the given text surrounded by repeated characters.
     /// </summary>
-    /// <param name = "text"></param>
+    /// <param name="text">The header text to display.</param>
     public void StartRunTime(string text)
     {
-        var delkaTextu = text.Length;
-        var hvezdicky = "";
-        hvezdicky = new string (s_znakNadpisu[0], delkaTextu);
-        //hvezdicky.PadLeft(delkaTextu, znakNadpisu[0]);
-        stringBuilder.AppendLine(hvezdicky);
-        stringBuilder.AppendLine(text);
-        stringBuilder.AppendLine(hvezdicky);
+        var textLength = text.Length;
+        var headerLine = new string(headerCharacter[0], textLength);
+        Builder.AppendLine(headerLine);
+        Builder.AppendLine(text);
+        Builder.AppendLine(headerLine);
     }
 
-    public void CountEvery<T>(IList<KeyValuePair<T, int>> eq)
+    /// <summary>
+    /// Outputs each key-value pair with the count appended.
+    /// </summary>
+    /// <typeparam name="T">The type of the key.</typeparam>
+    /// <param name="list">The list of key-value pairs to output.</param>
+    public void CountEvery<T>(IList<KeyValuePair<T, int>> list)
     {
-        foreach (var item in eq)
+        foreach (var item in list)
             AppendLine(item.Key + "," + item.Value + "x");
     }
 
+    /// <summary>
+    /// Appends an empty line.
+    /// </summary>
     public void AppendLine()
     {
         AppendLine(string.Empty);
     }
 
-    public void AppendLine(StringBuilder text)
+    /// <summary>
+    /// Appends the content of a StringBuilder followed by a new line.
+    /// </summary>
+    /// <param name="stringBuilder">The StringBuilder whose content to append.</param>
+    public void AppendLine(StringBuilder stringBuilder)
     {
-        stringBuilder.AppendLine(text.ToString());
+        Builder.AppendLine(stringBuilder.ToString());
     }
 
+    /// <summary>
+    /// Appends text without a trailing new line.
+    /// </summary>
+    /// <param name="text">The text to append.</param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Append(string text)
     {
-        stringBuilder.Append(text);
+        Builder.Append(text);
     }
 
+    /// <summary>
+    /// Appends text followed by a new line.
+    /// </summary>
+    /// <param name="text">The text to append.</param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void AppendLine(string text)
     {
-        stringBuilder.AppendLine(text);
-    }
-
-    public void AppendLineFormat(string text, params string[] p)
-    {
-        stringBuilder.AppendLine();
-        AppendLine(string.Format(text, p));
-    }
-
-    public void AppendFormat(string text, params string[] p)
-    {
-        AppendLine(string.Format(text, p));
-    }
-
-    public void Header(string v)
-    {
-        stringBuilder.AppendLine();
-        AppendLine(v);
-        stringBuilder.AppendLine();
-    }
-
-    public void SingleCharLine(char paddingChar, int v)
-    {
-        stringBuilder.AppendLine(string.Empty.PadLeft(v, paddingChar));
-    }
-
-    public void ListObject(IList files1)
-    {
-        var list = new List<string>();
-        foreach (var item in files1)
-            list.Add(item.ToString());
-        List(list);
-    }
-
-    public void ListSB(StringBuilder onlyStart, string v)
-    {
-        Header(v);
-        AppendLine(onlyStart);
+        Builder.AppendLine(text);
     }
 
     /// <summary>
-    ///     If you have StringBuilder, use Paragraph()
+    /// Appends a blank line, then formatted text followed by a new line.
     /// </summary>
-    /// <param name = "files1"></param>
-    public void List(IList<string> files1)
+    /// <param name="text">The format string.</param>
+    /// <param name="arguments">The format arguments.</param>
+    public void AppendLineFormat(string text, params string[] arguments)
     {
-        List<string>(files1);
-    }
-
-    public void List<Value>(IList<Value> files1, string deli = "\r\n", string whenNoEntries = "")
-    {
-        if (files1.Count() == 0)
-            stringBuilder.AppendLine(whenNoEntries);
-        else
-            foreach (var item in files1)
-                Append(item + deli);
-    //stringBuilder.AppendLine();
+        Builder.AppendLine();
+        AppendLine(string.Format(text, arguments));
     }
 
     /// <summary>
-    ///     must be where Header : IEnumerable<char> (like is string)
+    /// Appends formatted text followed by a new line.
     /// </summary>
-    /// <typeparam name = "Header"></typeparam>
-    /// <typeparam name = "Value"></typeparam>
-    /// <param name = "files1"></param>
-    /// <param name = "header"></param>
-    public void List<Header, Value>(IList<Value> files1, Header header)
-        where Header : IEnumerable<char>
+    /// <param name="text">The format string.</param>
+    /// <param name="arguments">The format arguments.</param>
+    public void AppendFormat(string text, params string[] arguments)
     {
-        List(files1, header, new TextOutputGeneratorArgs { headerWrappedEmptyLines = true, insertCount = false });
+        AppendLine(string.Format(text, arguments));
     }
 
-    public void List(IList<string> files1, string header)
+    /// <summary>
+    /// Appends a header surrounded by empty lines.
+    /// </summary>
+    /// <param name="text">The header text.</param>
+    public void Header(string text)
     {
-        List(files1, header, new TextOutputGeneratorArgs { headerWrappedEmptyLines = true, insertCount = false });
+        Builder.AppendLine();
+        AppendLine(text);
+        Builder.AppendLine();
     }
 
-    public void ListString(string list, string header)
+    /// <summary>
+    /// Appends a line of repeated characters.
+    /// </summary>
+    /// <param name="paddingChar">The character to repeat.</param>
+    /// <param name="length">The number of times to repeat the character.</param>
+    public void SingleCharLine(char paddingChar, int length)
+    {
+        Builder.AppendLine(string.Empty.PadLeft(length, paddingChar));
+    }
+
+    /// <summary>
+    /// Outputs objects as a list by converting each to string.
+    /// </summary>
+    /// <param name="list">The list of objects to output.</param>
+    public void ListObject(IList list)
+    {
+        var stringList = new List<string>();
+        foreach (var item in list)
+            stringList.Add(item?.ToString() ?? string.Empty);
+        List(stringList);
+    }
+
+    /// <summary>
+    /// Outputs a StringBuilder content with a header.
+    /// </summary>
+    /// <param name="stringBuilder">The StringBuilder content to output.</param>
+    /// <param name="header">The header text.</param>
+    public void ListSB(StringBuilder stringBuilder, string header)
     {
         Header(header);
-        AppendLine(list);
-        stringBuilder.AppendLine();
+        AppendLine(stringBuilder);
     }
 
     /// <summary>
-    ///     Use DictionaryHelper.CategoryParser
+    /// Outputs a list of strings, one per line.
     /// </summary>
-    /// <typeparam name = "Header"></typeparam>
-    /// <typeparam name = "Value"></typeparam>
-    /// <param name = "files1"></param>
-    /// <param name = "header"></param>
-    /// <param name = "a"></param>
-    public void List<Header, Value>(IList<Value> files1, Header header, TextOutputGeneratorArgs a)
-        where Header : IEnumerable<char>
+    /// <param name="list">The list of strings to output.</param>
+    public void List(IList<string> list)
     {
-        if (a.insertCount)
-        {
-        //throw new Exception("later");
-        //header = (Header)((IList<char>)CA.JoinIList<char>(header, " (" + files1.Count() + ")"));
-        }
-
-        if (a.headerWrappedEmptyLines)
-            stringBuilder.AppendLine();
-        stringBuilder.AppendLine(header + ":");
-        if (a.headerWrappedEmptyLines)
-            stringBuilder.AppendLine();
-        List(files1, a.delimiter, a.whenNoEntries);
+        List<string>(list);
     }
 
-    public void Paragraph(StringBuilder wrongNumberOfParts, string header)
+    /// <summary>
+    /// Outputs a list of values with a specified delimiter.
+    /// </summary>
+    /// <typeparam name="TValue">The type of the list elements.</typeparam>
+    /// <param name="list">The list of values to output.</param>
+    /// <param name="delimiter">The delimiter between entries.</param>
+    /// <param name="whenNoEntries">Text to display when the list is empty.</param>
+    public void List<TValue>(IList<TValue> list, string delimiter = "\r\n", string whenNoEntries = "")
     {
-        var text = wrongNumberOfParts.ToString().Trim();
+        if (list.Count() == 0)
+            Builder.AppendLine(whenNoEntries);
+        else
+            foreach (var item in list)
+                Append(item + delimiter);
+    }
+
+    /// <summary>
+    /// Outputs a list with a header. Header must implement IEnumerable of char (like string).
+    /// </summary>
+    /// <typeparam name="THeader">The header type (must be IEnumerable of char).</typeparam>
+    /// <typeparam name="TValue">The type of the list elements.</typeparam>
+    /// <param name="list">The list of values to output.</param>
+    /// <param name="header">The header text.</param>
+    public void List<THeader, TValue>(IList<TValue> list, THeader header)
+        where THeader : IEnumerable<char>
+    {
+        List(list, header, new TextOutputGeneratorArgs { IsHeaderWrappedWithEmptyLines = true, IsInsertingCount = false });
+    }
+
+    /// <summary>
+    /// Outputs a list of strings with a header.
+    /// </summary>
+    /// <param name="list">The list of strings to output.</param>
+    /// <param name="header">The header text.</param>
+    public void List(IList<string> list, string header)
+    {
+        List(list, header, new TextOutputGeneratorArgs { IsHeaderWrappedWithEmptyLines = true, IsInsertingCount = false });
+    }
+
+    /// <summary>
+    /// Outputs a string value with a header.
+    /// </summary>
+    /// <param name="text">The text to output.</param>
+    /// <param name="header">The header text.</param>
+    public void ListString(string text, string header)
+    {
+        Header(header);
+        AppendLine(text);
+        Builder.AppendLine();
+    }
+
+    /// <summary>
+    /// Outputs a list with a header and formatting options.
+    /// </summary>
+    /// <typeparam name="THeader">The header type (must be IEnumerable of char).</typeparam>
+    /// <typeparam name="TValue">The type of the list elements.</typeparam>
+    /// <param name="list">The list of values to output.</param>
+    /// <param name="header">The header text.</param>
+    /// <param name="args">Formatting arguments controlling output behavior.</param>
+    public void List<THeader, TValue>(IList<TValue> list, THeader header, TextOutputGeneratorArgs args)
+        where THeader : IEnumerable<char>
+    {
+        if (args.IsHeaderWrappedWithEmptyLines)
+            Builder.AppendLine();
+        Builder.AppendLine(header + ":");
+        if (args.IsHeaderWrappedWithEmptyLines)
+            Builder.AppendLine();
+        List(list, args.Delimiter, args.WhenNoEntries);
+    }
+
+    /// <summary>
+    /// Outputs a paragraph from a StringBuilder with a header.
+    /// </summary>
+    /// <param name="stringBuilder">The StringBuilder containing the paragraph text.</param>
+    /// <param name="header">The header text.</param>
+    public void Paragraph(StringBuilder stringBuilder, string header)
+    {
+        var text = stringBuilder.ToString().Trim();
         Paragraph(text, header);
     }
 
     /// <summary>
-    ///     For ordinary text use Append*
+    /// Outputs a paragraph with a header. Only outputs if text is not empty.
     /// </summary>
-    /// <param name = "text"></param>
-    /// <param name = "header"></param>
+    /// <param name="text">The paragraph text.</param>
+    /// <param name="header">The header text.</param>
     public void Paragraph(string text, string header)
     {
         if (text != string.Empty)
         {
-            stringBuilder.AppendLine(header + ":");
-            stringBuilder.AppendLine(text);
-            stringBuilder.AppendLine();
+            Builder.AppendLine(header + ":");
+            Builder.AppendLine(text);
+            Builder.AppendLine();
         }
     }
 
-    public void Dictionary(Dictionary<string, int> charEntity, string delimiter)
+    /// <summary>
+    /// Outputs a dictionary of string-int pairs with a delimiter.
+    /// </summary>
+    /// <param name="dictionary">The dictionary to output.</param>
+    /// <param name="delimiter">The delimiter between key and value.</param>
+    public void Dictionary(Dictionary<string, int> dictionary, string delimiter)
     {
-        foreach (var item in charEntity)
-            stringBuilder.AppendLine(item.Key + delimiter + item.Value);
+        foreach (var item in dictionary)
+            Builder.AppendLine(item.Key + delimiter + item.Value);
     }
 
-    public void DictionaryKeyValuePair<T1, T2>(string header, IOrderedEnumerable<KeyValuePair<T1, T2>> ordered)
+    /// <summary>
+    /// Outputs ordered key-value pairs with a header.
+    /// </summary>
+    /// <typeparam name="TKey">The type of the key.</typeparam>
+    /// <typeparam name="TValue">The type of the value.</typeparam>
+    /// <param name="header">The header text.</param>
+    /// <param name="ordered">The ordered key-value pairs to output.</param>
+    public void DictionaryKeyValuePair<TKey, TValue>(string header, IOrderedEnumerable<KeyValuePair<TKey, TValue>> ordered)
     {
         Header(header);
         foreach (var item in ordered)
-            stringBuilder.AppendLine(item.Key + " " + item.Value);
+            Builder.AppendLine(item.Key + " " + item.Value);
     }
 
-    public void IGrouping(IEnumerable<IGrouping<string, string>> g)
+    /// <summary>
+    /// Outputs grouped strings as a dictionary.
+    /// </summary>
+    /// <param name="grouping">The grouped strings to output.</param>
+    public void IGrouping(IEnumerable<IGrouping<string, string>> grouping)
     {
-        var dictionary = IGroupingToDictionary(g);
+        var dictionary = IGroupingToDictionary(grouping);
         Dictionary(dictionary);
     }
 
-    private Dictionary<string, List<string>> IGroupingToDictionary(IEnumerable<IGrouping<string, string>> g)
+    private Dictionary<string, List<string>> IGroupingToDictionary(IEnumerable<IGrouping<string, string>> grouping)
     {
-        var list = new Dictionary<string, List<string>>();
-        foreach (var item in g)
-            list.Add(item.Key, item.ToList());
-        return list;
+        var dictionary = new Dictionary<string, List<string>>();
+        foreach (var item in grouping)
+            dictionary.Add(item.Key, item.ToList());
+        return dictionary;
     }
 }

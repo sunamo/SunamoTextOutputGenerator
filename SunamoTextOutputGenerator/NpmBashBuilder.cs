@@ -1,29 +1,45 @@
 namespace SunamoTextOutputGenerator;
 
+/// <summary>
+/// Builder for generating npm bash commands.
+/// </summary>
 public class NpmBashBuilder : INpmBashBuilder
 {
-    public TextBuilder sb;
+    /// <summary>
+    /// Gets or sets the underlying text builder.
+    /// </summary>
+    public TextBuilder Builder { get; set; }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="NpmBashBuilder"/> class.
+    /// </summary>
     public NpmBashBuilder()
     {
-        sb = new TextBuilder();
-        sb.prependEveryNoWhite = "";
+        Builder = new TextBuilder();
+        Builder.PrependEveryNoWhite = "";
     }
 
-    public NpmBashBuilder(TextBuilder sb)
+    /// <summary>
+    /// Initializes a new instance of the <see cref="NpmBashBuilder"/> class with an existing text builder.
+    /// </summary>
+    /// <param name="textBuilder">The text builder to use.</param>
+    public NpmBashBuilder(TextBuilder textBuilder)
     {
-        this.sb = sb;
-        //this.sb.sb = sb.sb;
+        Builder = textBuilder;
     }
 
-    public void I(string args = null)
+    /// <summary>
+    /// Runs npm install with optional arguments.
+    /// </summary>
+    /// <param name="arguments">Optional npm install arguments.</param>
+    public void Install(string? arguments = null)
     {
-        Npm("i " + args);
+        Npm("i " + arguments);
     }
 
-    private void Npm(string remainCommand)
+    private void Npm(string remainingCommand)
     {
-        sb.Append("npm " + remainCommand);
-        sb.AppendLine();
+        Builder.Append("npm " + remainingCommand);
+        Builder.AppendLine();
     }
 }

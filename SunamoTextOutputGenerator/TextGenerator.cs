@@ -1,93 +1,102 @@
 namespace SunamoTextOutputGenerator;
 
 /// <summary>
-///     TextWriterList - instance
-///     TextBuilder - instance
-///     TextOutputGenerator - instance
-///     TextGenerator - static
+/// Static text generation utilities.
+/// TextWriterList - instance, TextBuilder - instance, TextOutputGenerator - instance, TextGenerator - static.
 /// </summary>
 public static class TextGenerator
 {
     /// <summary>
-    ///     Keep as IList, not List because to IList can be casted every List
+    /// Generates a list with percent distribution from a string dictionary.
+    /// Keep as IList, not List because to IList can be casted every List.
     /// </summary>
-    /// <param name="p"></param>
-    /// <returns></returns>
-    public static string GenerateListWithPercent(Dictionary<string, List<string>> p)
+    /// <param name="dictionary">The dictionary of category names to their string values.</param>
+    /// <returns>Formatted text with percentage distribution.</returns>
+    public static string GenerateListWithPercent(Dictionary<string, List<string>> dictionary)
     {
-        return GenerateListWithPercent<string, string>(p);
-    }
-
-    public static string GenerateListWithPercent<T, U>(Dictionary<T, List<U>> p)
-    {
-        var dictionary = new Dictionary<T, List<U>>(p.Count);
-        foreach (var item in p) dictionary.Add(item.Key, item.Value);
-
-        return GenerateListWithPercent(dictionary);
+        return GenerateListWithPercent<string, string>(dictionary);
     }
 
     /// <summary>
-    ///     24-9-23 nahrazeno za List z IList (pokud je Dictionary, musí být přesný, nestačí IList)
+    /// Generates a list with percent distribution from a generic dictionary with List values.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <typeparam name="U"></typeparam>
-    /// <param name="p"></param>
-    /// <returns></returns>
-    public static string GenerateListWithPercent<T, U>(Dictionary<T, IList<U>> p, IPercentCalculatorTog pc2)
+    /// <typeparam name="TKey">The type of the key.</typeparam>
+    /// <typeparam name="TValue">The type of the list elements.</typeparam>
+    /// <param name="dictionary">The dictionary to process.</param>
+    /// <returns>Formatted text with percentage distribution.</returns>
+    public static string GenerateListWithPercent<TKey, TValue>(Dictionary<TKey, List<TValue>> dictionary)
+        where TKey : notnull
     {
-        var overall = 0;
+        var converted = new Dictionary<TKey, List<TValue>>(dictionary.Count);
+        foreach (var item in dictionary) converted.Add(item.Key, item.Value);
 
-        foreach (var item in p) overall += item.Value.Count();
+        return GenerateListWithPercent(converted);
+    }
 
-        var pc = pc2.Create(overall); //new PercentCalculator(overall); ;
+    /// <summary>
+    /// Generates a list with percent distribution from a generic dictionary with IList values.
+    /// </summary>
+    /// <typeparam name="TKey">The type of the key.</typeparam>
+    /// <typeparam name="TValue">The type of the list elements.</typeparam>
+    /// <param name="dictionary">The dictionary to process.</param>
+    /// <param name="percentCalculatorFactory">Factory for creating percent calculators.</param>
+    /// <returns>Formatted text with percentage distribution.</returns>
+    public static string GenerateListWithPercent<TKey, TValue>(Dictionary<TKey, IList<TValue>> dictionary, IPercentCalculatorTog percentCalculatorFactory)
+        where TKey : notnull
+    {
+        var overallCount = 0;
 
-        var tog = new TextOutputGenerator();
+        foreach (var item in dictionary) overallCount += item.Value.Count();
 
-        var withoutLast = p.Take(p.Count() - 1);
+        var percentCalculator = percentCalculatorFactory.Create(overallCount);
 
-        var p2 = 0;
-        var p3 = 0;
+        var generator = new TextOutputGenerator();
 
-        var kvp = p.Last();
+        var withoutLast = dictionary.Take(dictionary.Count() - 1);
 
-        var percent2 = new Dictionary<T, int>();
+        var currentPercent = 0;
+        var totalPercent = 0;
+
+        var lastEntry = dictionary.Last();
+
+        var percentMap = new Dictionary<TKey, int>();
 
         foreach (var item in withoutLast)
         {
-            p2 = pc.PercentFor(item.Value.Count(), false);
+            currentPercent = percentCalculator.PercentFor(item.Value.Count(), false);
 
-            p3 += p2;
+            totalPercent += currentPercent;
 
-            percent2.Add(item.Key, p2);
+            percentMap.Add(item.Key, currentPercent);
         }
 
-        p2 = pc.PercentFor(kvp.Value.Count(), false);
-        p3 += p2;
-        percent2.Add(kvp.Key, p2);
+        currentPercent = percentCalculator.PercentFor(lastEntry.Value.Count(), false);
+        totalPercent += currentPercent;
+        percentMap.Add(lastEntry.Key, currentPercent);
 
-        var largest = 0;
-        T keyLargest = default;
+        var largestPercent = 0;
+        TKey? largestKey = default;
 
-        if (p3 != 0)
+        if (totalPercent != 0)
         {
-            foreach (var item in percent2)
-                if (item.Value > largest)
+            foreach (var item in percentMap)
+                if (item.Value > largestPercent)
                 {
-                    largest = item.Value;
-                    keyLargest = item.Key;
+                    largestPercent = item.Value;
+                    largestKey = item.Key;
                     break;
                 }
 
-            percent2[keyLargest] = percent2[keyLargest] + (100 - p3);
+            if (largestKey != null)
+            {
+                percentMap[largestKey] = percentMap[largestKey] + (100 - totalPercent);
+            }
         }
 
         foreach (var item in withoutLast)
-            //tog.List(withoutLast.First(dictionary => dictionary.Key == item.Key).Value, item.Key + " (" + item.Value + "%)");
-            tog.List(item.Value, item.Key + " (" + percent2[item.Key] + "%)");
+            generator.List(item.Value, item.Key + " (" + percentMap[item.Key] + "%)");
 
-        //p2 = pc.PercentFor(kvp.Value.Count(), false);
-
-        tog.List(kvp.Value, kvp.Key + " (" + (100 - p2) + "%)");
-        return tog.ToString();
+        generator.List(lastEntry.Value, lastEntry.Key + " (" + (100 - currentPercent) + "%)");
+        return generator.ToString();
     }
 }

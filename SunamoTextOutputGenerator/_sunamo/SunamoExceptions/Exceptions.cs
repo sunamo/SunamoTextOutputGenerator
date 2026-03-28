@@ -1,55 +1,59 @@
 namespace SunamoTextOutputGenerator._sunamo.SunamoExceptions;
 
-// © www.sunamo.cz. All Rights Reserved.
+/// <summary>
+/// Provides exception message generation and stack trace utilities.
+/// </summary>
 internal sealed partial class Exceptions
 {
     #region Other
-    internal static string CheckBefore(string before)
+    internal static string CheckBefore(string prefix)
     {
-        return string.IsNullOrWhiteSpace(before) ? string.Empty : before + ": ";
+        return string.IsNullOrWhiteSpace(prefix) ? string.Empty : prefix + ": ";
     }
 
     internal static Tuple<string, string, string> PlaceOfException(
-bool fillAlsoFirstTwo = true)
+        bool isFillAlsoFirstTwo = true)
     {
-        StackTrace st = new();
-        var value = st.ToString();
-        var lines = value.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
+        StackTrace stackTrace = new();
+        var stackTraceText = stackTrace.ToString();
+        var lines = stackTraceText.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
         lines.RemoveAt(0);
-        var i = 0;
-        string type = string.Empty;
+        var index = 0;
+        string typeName = string.Empty;
         string methodName = string.Empty;
-        for (; i < lines.Count; i++)
+        for (; index < lines.Count; index++)
         {
-            var item = lines[i];
-            if (fillAlsoFirstTwo)
-                if (!item.StartsWith("   at ThrowEx"))
+            var line = lines[index];
+            if (isFillAlsoFirstTwo)
+                if (!line.StartsWith("   at ThrowEx"))
                 {
-                    TypeAndMethodName(item, out type, out methodName);
-                    fillAlsoFirstTwo = false;
+                    TypeAndMethodName(line, out typeName, out methodName);
+                    isFillAlsoFirstTwo = false;
                 }
-            if (item.StartsWith("at System."))
+            if (line.StartsWith("at System."))
             {
                 lines.Add(string.Empty);
                 lines.Add(string.Empty);
                 break;
             }
         }
-        return new Tuple<string, string, string>(type, methodName, string.Join(Environment.NewLine, lines));
+        return new Tuple<string, string, string>(typeName, methodName, string.Join(Environment.NewLine, lines));
     }
-    internal static void TypeAndMethodName(string lines, out string type, out string methodName)
+
+    internal static void TypeAndMethodName(string line, out string typeName, out string methodName)
     {
-        var s2 = lines.Split("at ")[1].Trim();
-        var text = s2.Split("(")[0];
-        var parameter = text.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries).ToList();
-        methodName = parameter[^1];
-        parameter.RemoveAt(parameter.Count - 1);
-        type = string.Join(".", parameter);
+        var afterAt = line.Split("at ")[1].Trim();
+        var qualifiedName = afterAt.Split("(")[0];
+        var segments = qualifiedName.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+        methodName = segments[^1];
+        segments.RemoveAt(segments.Count - 1);
+        typeName = string.Join(".", segments);
     }
-    internal static string CallingMethod(int value = 1)
+
+    internal static string CallingMethod(int depth = 1)
     {
         StackTrace stackTrace = new();
-        var methodBase = stackTrace.GetFrame(value)?.GetMethod();
+        var methodBase = stackTrace.GetFrame(depth)?.GetMethod();
         if (methodBase == null)
         {
             return "Method name cannot be get";
@@ -59,20 +63,16 @@ bool fillAlsoFirstTwo = true)
     }
     #endregion
 
-    #region IsNullOrWhitespace
-    readonly static StringBuilder sbAdditionalInfoInner = new();
-    readonly static StringBuilder sbAdditionalInfo = new();
-    #endregion
+    #region OnlyReturnString
 
-    #region OnlyReturnString 
-
-    internal static string? IsNotAllowed(string before, string what)
+    internal static string? IsNotAllowed(string prefix, string operationName)
     {
-        return CheckBefore(before) + what + " is not allowed.";
+        return CheckBefore(prefix) + operationName + " is not allowed.";
     }
-    internal static string? NotImplementedMethod(string before)
+
+    internal static string? NotImplementedMethod(string prefix)
     {
-        return CheckBefore(before) + "Not implemented method.";
+        return CheckBefore(prefix) + "Not implemented method.";
     }
     #endregion
 }

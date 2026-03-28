@@ -1,37 +1,28 @@
 # SunamoTextOutputGenerator
 
-Generating string output in various formats
+Generating string output in various formats.
 
 ## Overview
 
-SunamoTextOutputGenerator is part of the Sunamo package ecosystem, providing modular, platform-independent utilities for .NET development.
+SunamoTextOutputGenerator is part of the Sunamo package ecosystem, providing modular, platform-independent utilities for .NET development. It offers fluent text generation for headers, lists, paragraphs, dictionaries, and percentage distributions.
 
 ## Main Components
 
 ### Key Classes
 
-- **CompareCollectionsResults**
-- **NpmBashBuilder**
-- **StaticSBNoThread**
-- **TextBuilder**
-- **TextGenerator**
-- **TextOutputGenerator**
-- **TextOutputGeneratorArgs**
-- **TextOutputGeneratorStatic**
-- **CompareCollectionsResult**
+- **TextOutputGenerator** - Main class for building formatted text output with headers, lists, paragraphs, and dictionary formatting.
+- **TextOutputGeneratorStatic** - Static helper methods for generating text output from collections and dictionaries.
+- **TextBuilder** - Text builder with StringBuilder and List modes, supporting undo capability.
+- **TextGenerator** - Static utilities for generating text with percentage distribution.
+- **CompareCollectionsResults** - Collection comparison result with text output generation.
+- **NpmBashBuilder** - Builder for generating npm bash commands.
+- **StaticSBNoThread** - Static non-thread-safe StringBuilder wrapper.
+- **TextOutputGeneratorArgs** - Arguments for controlling list formatting behavior.
 
-### Key Methods
+### Key Interfaces
 
-- `TextOutput()`
-- `I()`
-- `Clear()`
-- `Append()`
-- `Undo()`
-- `AppendLine()`
-- `Create()`
-- `GenerateListWithPercent()`
-- `EndRunTime()`
-- `NoData()`
+- **ITextBuilder** - Interface for text building with append and undo support.
+- **IPercentCalculatorTog** - Interface for percentage calculations in text generation.
 
 ## Installation
 
@@ -39,17 +30,39 @@ SunamoTextOutputGenerator is part of the Sunamo package ecosystem, providing mod
 dotnet add package SunamoTextOutputGenerator
 ```
 
+## Usage
+
+```csharp
+var generator = new TextOutputGenerator();
+
+// Add a header
+generator.Header("Results");
+
+// Add a list
+generator.List(new List<string> { "item1", "item2", "item3" }, "Items");
+
+// Add a paragraph
+generator.Paragraph("Some detailed text here.", "Details");
+
+// Get the output
+string output = generator.ToString();
+```
+
+## Target Frameworks
+
+- .NET 10.0
+- .NET 9.0
+- .NET 8.0
+
 ## Dependencies
 
-- **Microsoft.Extensions.Logging.Abstractions** (v9.0.3)
+- **Microsoft.Extensions.Logging.Abstractions**
 
 ## Package Information
 
 - **Package Name**: SunamoTextOutputGenerator
-- **Version**: 25.3.29.1
-- **Target Framework**: net9.0
-- **Category**: Platform-Independent NuGet Package
-- **Source Files**: 17
+- **License**: MIT
+- **Repository**: [GitHub](https://github.com/sunamo/SunamoTextOutputGenerator)
 
 ## Related Packages
 
@@ -57,4 +70,4 @@ This package is part of the Sunamo package ecosystem. For more information about
 
 ## License
 
-See the repository root for license information.
+MIT License - see the repository root for details.
