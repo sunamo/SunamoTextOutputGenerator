@@ -1,8 +1,5 @@
 namespace SunamoTextOutputGenerator._sunamo.SunamoExceptions;
 
-/// <summary>
-/// Provides methods for throwing exceptions with detailed context information.
-/// </summary>
 internal partial class ThrowEx
 {
     internal static bool IsNotAllowed(string operationName)
@@ -25,7 +22,7 @@ internal partial class ThrowEx
 
     private static string FullNameOfExecutedCode(object type, string methodName, bool isFromThrowEx = false)
     {
-        if (methodName == null)
+        if (methodName is null)
         {
             int depth = 2;
             if (isFromThrowEx)
@@ -59,7 +56,7 @@ internal partial class ThrowEx
 
     internal static bool ThrowIsNotNull(string? exceptionMessage, bool isReallyThrowing = true)
     {
-        if (exceptionMessage != null)
+        if (exceptionMessage is not null)
         {
             Debugger.Break();
             if (isReallyThrowing)
