@@ -1,14 +1,29 @@
 namespace SunamoTextOutputGenerator;
 
-// TextWriterList - instance, TextBuilder - instance, TextOutputGenerator - instance, TextGenerator - static.
+/// <summary>
+/// Static text generation utilities.
+/// TextWriterList - instance, TextBuilder - instance, TextOutputGenerator - instance, TextGenerator - static.
+/// </summary>
 public static class TextGenerator
 {
-    // Keep as IList, not List because to IList can be casted every List.
+    /// <summary>
+    /// Generates a list with percent distribution from a string dictionary.
+    /// Keep as IList, not List because to IList can be casted every List.
+    /// </summary>
+    /// <param name="dictionary">The dictionary of category names to their string values.</param>
+    /// <returns>Formatted text with percentage distribution.</returns>
     public static string GenerateListWithPercent(Dictionary<string, List<string>> dictionary)
     {
         return GenerateListWithPercent<string, string>(dictionary);
     }
 
+    /// <summary>
+    /// Generates a list with percent distribution from a generic dictionary with List values.
+    /// </summary>
+    /// <typeparam name="TKey">The type of the key.</typeparam>
+    /// <typeparam name="TValue">The type of the list elements.</typeparam>
+    /// <param name="dictionary">The dictionary to process.</param>
+    /// <returns>Formatted text with percentage distribution.</returns>
     public static string GenerateListWithPercent<TKey, TValue>(Dictionary<TKey, List<TValue>> dictionary)
         where TKey : notnull
     {
@@ -18,6 +33,14 @@ public static class TextGenerator
         return GenerateListWithPercent(converted);
     }
 
+    /// <summary>
+    /// Generates a list with percent distribution from a generic dictionary with IList values.
+    /// </summary>
+    /// <typeparam name="TKey">The type of the key.</typeparam>
+    /// <typeparam name="TValue">The type of the list elements.</typeparam>
+    /// <param name="dictionary">The dictionary to process.</param>
+    /// <param name="percentCalculatorFactory">Factory for creating percent calculators.</param>
+    /// <returns>Formatted text with percentage distribution.</returns>
     public static string GenerateListWithPercent<TKey, TValue>(Dictionary<TKey, IList<TValue>> dictionary, IPercentCalculatorTog percentCalculatorFactory)
         where TKey : notnull
     {
