@@ -29,7 +29,7 @@ public partial class TextOutputGenerator
         {
             var list = new List<string>(dictionary.Count);
             foreach (var item in dictionary)
-                list.Add(item.Key + " " + item.Value.Count());
+                list.Add($"{item.Key} {item.Value.Count()}");
             List(list);
         }
         else
@@ -80,7 +80,7 @@ public partial class TextOutputGenerator
     /// <param name="value">The value text.</param>
     public void PairBullet(string key, string value)
     {
-        Builder.AppendLine(key + ": " + value);
+        Builder.AppendLine($"{key}: {value}");
     }
 
     /// <summary>
