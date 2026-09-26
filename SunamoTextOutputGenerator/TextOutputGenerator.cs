@@ -16,20 +16,13 @@ public partial class TextOutputGenerator
     /// Creates a new instance of <see cref="TextOutputGenerator"/>.
     /// </summary>
     /// <returns>A new TextOutputGenerator instance.</returns>
-    public static TextOutputGenerator Create()
-    {
-        return new TextOutputGenerator();
-    }
+    public static TextOutputGenerator Create() => new TextOutputGenerator();
 
     /// <summary>
     /// Returns all accumulated text as a string.
     /// </summary>
     /// <returns>The generated text output.</returns>
-    public override string ToString()
-    {
-        var result = Builder.ToString();
-        return result;
-    }
+    public override string ToString() => Builder.ToString();
 
     /// <summary>
     /// Undoes the last operation. Not implemented.
@@ -76,7 +69,7 @@ public partial class TextOutputGenerator
     public void CountEvery<T>(IList<KeyValuePair<T, int>> list)
     {
         foreach (var item in list)
-            AppendLine(item.Key + "," + item.Value + "x");
+            AppendLine($"{item.Key},{item.Value}x");
     }
 
     /// <summary>
@@ -308,7 +301,7 @@ public partial class TextOutputGenerator
     {
         Header(header);
         foreach (var item in ordered)
-            Builder.AppendLine(item.Key + " " + item.Value);
+            Builder.AppendLine($"{item.Key} {item.Value}");
     }
 
     /// <summary>

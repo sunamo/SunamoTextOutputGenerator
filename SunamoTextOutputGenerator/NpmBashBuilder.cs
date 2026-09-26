@@ -34,12 +34,12 @@ public class NpmBashBuilder : INpmBashBuilder
     /// <param name="arguments">Optional npm install arguments.</param>
     public void Install(string? arguments = null)
     {
-        Npm("i " + arguments);
+        Npm($"i {arguments}");
     }
 
     private void Npm(string remainingCommand)
     {
-        Builder.Append("npm " + remainingCommand);
+        Builder.Append($"npm {remainingCommand}");
         Builder.AppendLine();
     }
 }

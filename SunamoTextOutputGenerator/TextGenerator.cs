@@ -87,16 +87,16 @@ public static class TextGenerator
                     break;
                 }
 
-            if (largestKey != null)
+            if (largestKey is not null)
             {
                 percentMap[largestKey] = percentMap[largestKey] + (100 - totalPercent);
             }
         }
 
         foreach (var item in withoutLast)
-            generator.List(item.Value, item.Key + " (" + percentMap[item.Key] + "%)");
+            generator.List(item.Value, $"{item.Key} ({percentMap[item.Key]}%)");
 
-        generator.List(lastEntry.Value, lastEntry.Key + " (" + (100 - currentPercent) + "%)");
+        generator.List(lastEntry.Value, $"{lastEntry.Key} ({100 - currentPercent}%)");
         return generator.ToString();
     }
 }
