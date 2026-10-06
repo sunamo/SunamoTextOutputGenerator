@@ -1,8 +1,5 @@
 namespace SunamoTextOutputGenerator._sunamo.SunamoExceptions;
 
-/// <summary>
-/// Provides exception message generation and stack trace utilities.
-/// </summary>
 internal sealed partial class Exceptions
 {
     #region Other
