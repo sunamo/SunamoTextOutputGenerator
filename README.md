@@ -1,5 +1,10 @@
 # SunamoTextOutputGenerator
 
+## Short description
+
+Knihovna pro generování textového výstupu v různých formátech s fluent rozhraním. Součást sbírky pinp s testy a Runnerem.
+
+
 Generating string output in various formats.
 
 ## Overview

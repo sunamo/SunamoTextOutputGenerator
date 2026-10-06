@@ -1,8 +1,5 @@
 namespace SunamoTextOutputGenerator._sunamo.SunamoExceptions;
 
-/// <summary>
-/// Provides methods for throwing exceptions with detailed context information.
-/// </summary>
 internal partial class ThrowEx
 {
     internal static bool IsNotAllowed(string operationName)
