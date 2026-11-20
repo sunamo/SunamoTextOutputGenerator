@@ -1,14 +1,27 @@
 namespace SunamoTextOutputGenerator;
 
 // TextWriterList - instance, TextBuilder - instance, TextOutputGenerator - instance, TextGenerator - static.
+/// <summary>
+/// Represents the text generator type.
+/// </summary>
 public static class TextGenerator
 {
     // Keep as IList, not List because to IList can be casted every List.
+    /// <summary>
+    /// Generate list with percent.
+    /// </summary>
+    /// <param name="dictionary">The dictionary.</param>
+    /// <returns>The generate list with percent result.</returns>
     public static string GenerateListWithPercent(Dictionary<string, List<string>> dictionary)
     {
         return GenerateListWithPercent<string, string>(dictionary);
     }
 
+    /// <summary>
+    /// Generate list with percent t key t value.
+    /// </summary>
+    /// <param name="dictionary">The dictionary.</param>
+    /// <returns>The generate list with percent t key t value result.</returns>
     public static string GenerateListWithPercent<TKey, TValue>(Dictionary<TKey, List<TValue>> dictionary)
         where TKey : notnull
     {
@@ -18,6 +31,12 @@ public static class TextGenerator
         return GenerateListWithPercent(converted);
     }
 
+    /// <summary>
+    /// Generate list with percent t key t value.
+    /// </summary>
+    /// <param name="dictionary">The dictionary.</param>
+    /// <param name="percentCalculatorFactory">The percent calculator factory.</param>
+    /// <returns>The generate list with percent t key t value result.</returns>
     public static string GenerateListWithPercent<TKey, TValue>(Dictionary<TKey, IList<TValue>> dictionary, IPercentCalculatorTog percentCalculatorFactory)
         where TKey : notnull
     {
