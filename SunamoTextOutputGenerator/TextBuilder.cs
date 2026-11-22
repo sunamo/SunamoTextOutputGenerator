@@ -1,5 +1,8 @@
 namespace SunamoTextOutputGenerator;
 
+/// <summary>
+/// Represents the text builder type.
+/// </summary>
 public class TextBuilder : ITextBuilder
 {
     private bool canUndo;
@@ -7,8 +10,15 @@ public class TextBuilder : ITextBuilder
     private string lastText = "";
     private readonly bool isUsingList;
 
+    /// <summary>
+    /// Gets or sets the builder.
+    /// </summary>
     public StringBuilder Builder { get; set; } = new();
 
+    /// <summary>
+    /// Text builder.
+    /// </summary>
+    /// <returns>The text builder result.</returns>
     public TextBuilder(bool isUsingList = false)
     {
         this.isUsingList = isUsingList;
@@ -16,10 +26,20 @@ public class TextBuilder : ITextBuilder
             List = new List<string>();
     }
 
+    /// <summary>
+    /// Gets or sets the prepend every no white.
+    /// </summary>
     public string PrependEveryNoWhite { get; set; } = string.Empty;
 
+    /// <summary>
+    /// Gets or sets the list.
+    /// </summary>
     public List<string>? List { get; set; }
 
+    /// <summary>
+    /// Clear.
+    /// </summary>
+    /// <returns>The clear result.</returns>
     public void Clear()
     {
         if (isUsingList)
@@ -28,6 +48,9 @@ public class TextBuilder : ITextBuilder
             Builder.Clear();
     }
 
+    /// <summary>
+    /// The can undo.
+    /// </summary>
     public bool CanUndo
     {
         get
@@ -46,12 +69,21 @@ public class TextBuilder : ITextBuilder
         }
     }
 
+    /// <summary>
+    /// Undo.
+    /// </summary>
+    /// <param name="!value">The value.</param>
+    /// <returns>The undo result.</returns>
     public void Undo()
     {
         if (isUsingList) UndoIsNotAllowed("Undo");
         if (lastIndex != -1) Builder.Remove(lastIndex, lastText.Length);
     }
 
+    /// <summary>
+    /// Append.
+    /// </summary>
+    /// <returns>The append result.</returns>
     public void Append(string text)
     {
         if (isUsingList)
@@ -69,6 +101,11 @@ public class TextBuilder : ITextBuilder
         }
     }
 
+    /// <summary>
+    /// Append.
+    /// </summary>
+    /// <param name="text">The text.</param>
+    /// <returns>The append result.</returns>
     public void Append(object value)
     {
         var text = value.ToString() ?? string.Empty;
@@ -76,11 +113,19 @@ public class TextBuilder : ITextBuilder
         Append(text);
     }
 
+    /// <summary>
+    /// Initializes a new instance of the append line class.
+    /// </summary>
+    /// <param name="PrependEveryNoWhite">The prepend every no white.</param>
     public void AppendLine()
     {
         Append(Environment.NewLine);
     }
 
+    /// <summary>
+    /// Append line.
+    /// </summary>
+    /// <param name="value">The value.</param>
     public void AppendLine(string text)
     {
         if (isUsingList)
@@ -94,6 +139,11 @@ public class TextBuilder : ITextBuilder
         }
     }
 
+    /// <summary>
+    /// To string.
+    /// </summary>
+    /// <param name="isUsingList">The is using list.</param>
+    /// <returns>The to string result.</returns>
     public override string ToString()
     {
         if (isUsingList)
@@ -101,6 +151,10 @@ public class TextBuilder : ITextBuilder
         return Builder.ToString();
     }
 
+    /// <summary>
+    /// Initializes a new instance of the create class.
+    /// </summary>
+    /// <param name="text">The text.</param>
     public static ITextBuilder Create(bool isUsingList = false)
     {
         return new TextBuilder(isUsingList);
