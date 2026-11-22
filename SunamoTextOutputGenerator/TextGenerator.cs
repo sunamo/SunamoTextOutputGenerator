@@ -25,10 +25,37 @@ public static class TextGenerator
     public static string GenerateListWithPercent<TKey, TValue>(Dictionary<TKey, List<TValue>> dictionary)
         where TKey : notnull
     {
-        var converted = new Dictionary<TKey, List<TValue>>(dictionary.Count);
+        if (dictionary.Count == 0) return string.Empty;
+        var converted = new Dictionary<TKey, IList<TValue>>(dictionary.Count);
         foreach (var item in dictionary) converted.Add(item.Key, item.Value);
 
-        return GenerateListWithPercent(converted);
+        return GenerateListWithPercent(converted, new DefaultPercentCalculator());
+    }
+
+    /// <summary>
+    /// Whole-number percent calculator used when the caller does not supply one.
+    /// </summary>
+    private sealed class DefaultPercentCalculator : IPercentCalculatorTog
+    {
+        /// <inheritdoc />
+        public double OverallSum { get; set; }
+
+        /// <inheritdoc />
+        public double Last { get; set; }
+
+        /// <inheritdoc />
+        public IPercentCalculatorTog Create(double overallSum) => new DefaultPercentCalculator { OverallSum = overallSum };
+
+        /// <inheritdoc />
+        public void AddOnePercent() => Last += OverallSum == 0 ? 0 : 100d / OverallSum;
+
+        /// <inheritdoc />
+        public int PercentFor(double value, bool isLast) => OverallSum == 0 ? 0 : (int)(100d * (value / OverallSum));
+
+        /// <inheritdoc />
+        public void ResetComputedSum()
+        {
+        }
     }
 
     /// <summary>
@@ -92,7 +119,7 @@ public static class TextGenerator
         foreach (var item in withoutLast)
             generator.List(item.Value, $"{item.Key} ({percentMap[item.Key]}%)");
 
-        generator.List(lastEntry.Value, $"{lastEntry.Key} ({100 - currentPercent}%)");
+        generator.List(lastEntry.Value, $"{lastEntry.Key} ({percentMap[lastEntry.Key]}%)");
         return generator.ToString();
     }
 }
