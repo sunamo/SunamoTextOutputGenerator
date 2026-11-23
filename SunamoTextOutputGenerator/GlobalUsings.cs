@@ -8,7 +8,6 @@ global using System.IO;
 global using SunamoTextOutputGenerator._public.SunamoData.Data;
 global using SunamoTextOutputGenerator._public.SunamoInterfaces.Interfaces;
 global using SunamoTextOutputGenerator._sunamo.SunamoExceptions;
-global using SunamoTextOutputGenerator._sunamo.SunamoInterfaces.Interfaces;
 global using System.Diagnostics;
 global using System.Reflection;
 global using System.Net;
